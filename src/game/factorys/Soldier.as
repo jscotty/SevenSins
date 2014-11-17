@@ -1,20 +1,30 @@
 package game.factorys 
 {
+	import flash.display.Sprite;
+	import flash.events.Event;
 	/**
 	 * ...
 	 * @author justin Bieshaar
 	 */
-	public class Soldier 
+	public class Soldier extends Sprite
 	{
 		private var _health:Number;
 		private var _damage:Number;
+		private var _speed:Number;
 		private var _hitCounter:Number;
 		private var _shooter:Boolean;
 		private var _healer:Boolean;
 		
-		public function test() :void
+		public function behaviour() :void
 		{
-			trace("enemy hit " + damage + " and got an health of: " + health + " he shoots every " + hitCounter + " seconds  Shooter = ");
+			trace("soldier! hits " + damage + " and got an health of: " + health + " he shoots every " + hitCounter + " seconds  Shooter = " + shooter + " Healer = " + healer);
+			
+			addEventListener(Event.ENTER_FRAME, update, false, 0, true);
+		}
+		
+		public function update(e:Event):void 
+		{
+			this.x += speed;
 		}
 		
 		public function get health() :Number
@@ -35,6 +45,16 @@ package game.factorys
 		public function set damage(damage:Number):void
 		{
 			_damage = damage;
+		}
+		
+		public function get speed() :Number
+		{
+			return _speed;
+		}
+		
+		public function set speed(speed:Number):void
+		{
+			_speed = speed;
 		}
 		
 		public function get hitCounter() :Number

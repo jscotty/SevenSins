@@ -1,6 +1,7 @@
 package game.factorys 
 {
 	import flash.display.Sprite;
+	import flash.events.Event;
 	
 	/**
 	 * ...
@@ -12,13 +13,21 @@ package game.factorys
 		private var _health:Number;
 		private var _damage:Number;
 		private var _mana:Number;
+		private var _speed:Number;
 		private var _hitCounter:Number;
 		private var _shooter:Boolean;
 		private var _healer:Boolean;
 		
-		public function test():void
+		public function behaviour():void
 		{
 			trace("enemy hit " + damage + " and got an health of: " + health + " he hits every " + hitCounter + " seconds  Shooter = " + shooter + " Gives " + mana + " mana");
+			
+			addEventListener(Event.ENTER_FRAME, update, false, 0, true);
+		}
+		
+		public function update(e:Event):void 
+		{
+			this.x -= speed;
 		}
 		
 		public function get health() :Number
@@ -49,6 +58,16 @@ package game.factorys
 		public function set mana(mana:Number):void
 		{
 			_mana = mana;
+		}
+		
+		public function get speed() :Number
+		{
+			return _speed;
+		}
+		
+		public function set speed(speed:Number):void
+		{
+			_speed = speed;
 		}
 		
 		public function get hitCounter() :Number

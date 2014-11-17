@@ -44,7 +44,7 @@ package
 			removeChild(_mainMenu);
 			_mainMenu = null;
 			
-			_game = new Game();
+			_game = new Game(stage);
 			addChild(_game);
 		}
 		

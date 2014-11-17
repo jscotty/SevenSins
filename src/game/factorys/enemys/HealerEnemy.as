@@ -14,6 +14,7 @@ package game.factorys.enemys
 			health = 500;
 			damage = 0;
 			mana = 325;
+			speed = 3;
 			hitCounter = 20;
 			shooter = false;
 			healer = true;
