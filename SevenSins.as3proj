@@ -52,7 +52,11 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
+<<<<<<< HEAD
     <element path="lib\SevenSinsPlaceHolders.swc" />
+=======
+    <element path="lib\assets.swc" />
+>>>>>>> 4eba6ea8fc065c357cee300479502b34ac38bb38
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
