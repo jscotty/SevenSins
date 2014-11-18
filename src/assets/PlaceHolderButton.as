@@ -10,7 +10,6 @@ package assets
 		
 		public function PlaceHolderButton() 
 		{
-			
 			graphics.beginFill(0x000000, 1);
 			graphics.drawRect(0, -5, 30, 100);
 			graphics.endFill();
