@@ -18,7 +18,8 @@ package game.factorys.soldiers
 			health = 300;
 			damage = 25;
 			speed = 3;
-			hitCounter = 5;
+			saveSpeed = 3;
+			hitCounter = 35;
 			shooter = true;
 			healer = false;
 		}

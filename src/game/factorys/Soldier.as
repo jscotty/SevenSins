@@ -2,6 +2,7 @@ package game.factorys
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import game.Game;
 	/**
 	 * ...
 	 * @author justin Bieshaar
@@ -11,9 +12,14 @@ package game.factorys
 		private var _health:Number;
 		private var _damage:Number;
 		private var _speed:Number;
+		private var _saveSpeed:Number;
 		private var _hitCounter:Number;
 		private var _shooter:Boolean;
 		private var _healer:Boolean;
+		
+		private var _bullet:Bullet;
+		
+		private var counter:int;
 		
 		public function behaviour() :void
 		{
@@ -25,6 +31,30 @@ package game.factorys
 		public function update(e:Event):void 
 		{
 			this.x += speed;
+			
+			if (shooter == true) {
+				//hitTest
+				var enemy:Enemy = Game.enemy; // Als de enemy tussen de 0 en 100 zit loopt de soldier niet
+				if (this.hitTestPoint(enemy.x - 100, enemy.y) || this.hitTestPoint(enemy.x - 60, enemy.y) || this.hitTestPoint(enemy.x - 20, enemy.y) || this.hitTestPoint(enemy.x, enemy.y)) {
+					speed = 0;
+					
+					counter ++;
+					//trace(counter);
+					if (counter >= _hitCounter) {
+						shoot();
+						counter = 0;
+					}
+					
+				}else {
+					speed = saveSpeed;
+				}
+			}
+		}
+		
+		private function shoot():void 
+		{
+			_bullet = new Bullet();
+			addChild(_bullet);
 		}
 		
 		public function get health() :Number
@@ -55,6 +85,16 @@ package game.factorys
 		public function set speed(speed:Number):void
 		{
 			_speed = speed;
+		}
+		
+		public function get saveSpeed() :Number
+		{
+			return _saveSpeed;
+		}
+		
+		public function set saveSpeed(saveSpeed:Number):void
+		{
+			_saveSpeed = saveSpeed;
 		}
 		
 		public function get hitCounter() :Number

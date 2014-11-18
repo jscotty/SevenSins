@@ -15,39 +15,36 @@ package game
 	public class Game extends Sprite 
 	{
 		private var _enemyFactory:EnemyFactory;
-		private var _enemy:Enemy;
+		public static var enemy:Enemy;
 		
 		private var _soldierFactory:SoldierFactory;
-		private var _soldier:Soldier;
+		public static var soldier:Soldier;
 		
 		public function Game(s:Stage) 
 		{
 			_enemyFactory = new EnemyFactory();
-			_enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_SCOUT);
+			enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_SCOUT);
 			
-			_enemy.behaviour();
-			_enemy.x = 400;
-			_enemy.y = 300;
-			addChild(_enemy);
+			enemy.behaviour();
+			enemy.x = 400;
+			enemy.y = 300;
+			addChild(enemy);
 			
 			
 			_soldierFactory = new SoldierFactory();
-			_soldier = _soldierFactory.createSoldier(SoldierFactory.SOLDIER_ARGER);
+			soldier = _soldierFactory.createSoldier(SoldierFactory.SOLDIER_ARGER);
 			
-			_soldier.behaviour();
-			_soldier.x = 100;
-			_soldier.y = 300;
-			addChild(_soldier);
+			soldier.behaviour();
+			soldier.x = 100;
+			soldier.y = 300;
+			addChild(soldier);
 			
 			s.addEventListener(Event.ENTER_FRAME, update, false, 0, true);
 		}
 		
 		private function update(e:Event):void 
 		{
-			if (_soldier.hitTestPoint(_enemy.x, _enemy.y)) {
-				_soldier.speed = 0;
-				_enemy.speed = 0;
-			}
+			
 		}
 		
 		
