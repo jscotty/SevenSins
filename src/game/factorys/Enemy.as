@@ -20,6 +20,8 @@ package game.factorys
 		private var _shooter:Boolean;
 		private var _healer:Boolean;
 		
+		public var died:Boolean = false;
+		
 		public function behaviour():void
 		{
 			trace("enemy hit " + damage + " and got an health of: " + health + " he hits every " + hitCounter + " seconds  Shooter = " + shooter + " Gives " + mana + " mana");
@@ -31,6 +33,8 @@ package game.factorys
 		{
 			this.x -= speed;
 			
+			trace("Enemy death!" + died);
+			
 			var soldier:Soldier = Game.soldier;
 				if (this.hitTestPoint(soldier.x + 20, soldier.y)) {
 					speed = 0;
@@ -39,13 +43,22 @@ package game.factorys
 				}
 			
 			if (shooter == true) {
-				var soldier:Soldier = Game.soldier;
 				if (this.hitTestPoint(soldier.x - 100, soldier.y) || this.hitTestPoint(soldier.x - 60, soldier.y) || this.hitTestPoint(soldier.x - 20, soldier.y) || this.hitTestPoint(soldier.x, soldier.y)) {
 					speed = 0;
 				}else {
 					speed = saveSpeed;
 				}
 			}
+			
+			if (health <= 0) {
+				death();
+			}
+		}
+		
+		public function death():void 
+		{
+			removeEventListener(Event.ENTER_FRAME, update);
+			died = true;
 		}
 		
 		public function get health() :Number

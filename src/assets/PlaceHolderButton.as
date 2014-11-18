@@ -12,7 +12,7 @@ package assets
 		{
 			
 			graphics.beginFill(0x000000, 1);
-			graphics.drawRect(0, -5, 30, 100);
+			graphics.drawRect(0, -5, 150, 100);
 			graphics.endFill();
 		}
 		

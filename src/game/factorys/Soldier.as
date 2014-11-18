@@ -17,14 +17,13 @@ package game.factorys
 		private var _shooter:Boolean;
 		private var _healer:Boolean;
 		
-		private var _bullet:Bullet;
+		private var _bullet:BulletArgerSoldier;
+		
 		
 		private var counter:int;
 		
 		public function behaviour() :void
-		{
-			trace("soldier! hits " + damage + " and got an health of: " + health + " he shoots every " + hitCounter + " seconds  Shooter = " + shooter + " Healer = " + healer);
-			
+		{	
 			addEventListener(Event.ENTER_FRAME, update, false, 0, true);
 		}
 		
@@ -34,8 +33,18 @@ package game.factorys
 			
 			if (shooter == true) {
 				//hitTest
-				var enemy:Enemy = Game.enemy; // Als de enemy tussen de 0 en 100 zit loopt de soldier niet
-				if (this.hitTestPoint(enemy.x - 100, enemy.y) || this.hitTestPoint(enemy.x - 60, enemy.y) || this.hitTestPoint(enemy.x - 20, enemy.y) || this.hitTestPoint(enemy.x, enemy.y)) {
+				// Als de enemy tussen de 0 en 100 zit loopt de soldier niet
+				
+				
+				for (var j:int = 0; j < Game.enemy.length; j++) {
+					var xposEnemy:int = this.x - Game.enemy[j].x;
+				}
+				for (var i:int = 0; i < Game.tower.length;i++){
+					var xposTower:int = this.x - Game.tower[1].x;
+				}
+				trace("xposenemy" + xposEnemy);
+				
+				if (xposEnemy >= -200 || xposTower >= -200) {
 					speed = 0;
 					
 					counter ++;
@@ -44,8 +53,12 @@ package game.factorys
 						shoot();
 						counter = 0;
 					}
-					
+					if (xposEnemy == 0) {
+						trace("cool");
+						speed = saveSpeed;
+					}
 				}else {
+					trace("cool");
 					speed = saveSpeed;
 				}
 			}
@@ -53,8 +66,22 @@ package game.factorys
 		
 		private function shoot():void 
 		{
-			_bullet = new Bullet();
+			_bullet = new BulletArgerSoldier();
 			addChild(_bullet);
+		}
+		
+		public function damageEnemy():void
+		{
+			for (var i:int = 0; i < Game.enemy.length; i++) {
+				Game.enemy[i].health -= damage;
+			}
+		}
+		
+		public function damageTower():void
+		{
+			for (var i:int = 0; i < Game.tower.length; i++) {
+				Game.tower[1].health -= damage / 2;
+			}
 		}
 		
 		public function get health() :Number
