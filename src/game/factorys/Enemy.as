@@ -38,6 +38,7 @@ package game.factorys
 			
 			for (var j:int = Game.soldier.length - 1; j > 0 ; j--) {
 				var xposSoldier:int = this.x - Game.soldier[j].x;
+				//trace(Game.soldier);
 			}
 			for (var ii:int = 0; ii < Game.tower.length;ii++){
 				var xposTower:int = this.x - Game.tower[0].x;
@@ -45,7 +46,6 @@ package game.factorys
 			
 ///////////////////////////////Attacks/Movement:
 			
-		for (var i:int = Game.soldier.length - 1; i > 0; i--) {
 			
 ///////////////////////////////Shooter:
 			if (shooter == true) {
@@ -78,7 +78,7 @@ package game.factorys
 					counter ++;
 					//trace(counter);
 					if (counter >= _hitCounter) {
-						damageEnemy();
+						damageSoldier();
 						counter = 0;
 					}
 					if (xposTower <= 50) {
@@ -93,7 +93,6 @@ package game.factorys
 					speed = saveSpeed;
 				}
 			}
-			}
 			
 			if (health <= 0) {
 				death();
@@ -105,10 +104,13 @@ package game.factorys
 			trace("SHOOTINH");
 		}
 	
-		private function damageEnemy():void 
+		private function damageSoldier():void 
 		{
 			for (var i:int = 0; i < Game.soldier.length; i++) {
-				Game.soldier[i].health -= damage;
+				//Game.soldier[i].health -= damage;
+				var xposSoldier:int = this.x - Game.soldier[i].x;
+				//trace("soldiers pos: " + xposSoldier);
+				Game.soldier.sortOn("x", Array.NUMERIC);
 			}
 		}
 		

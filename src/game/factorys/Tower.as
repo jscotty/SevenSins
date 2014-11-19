@@ -19,7 +19,7 @@ package game.factorys
 			tf = new TextFormat("Arial", 25, 0xf15822, false);
 			text = new TextField();
 			text.text = "";
-			text.y = 100;
+			text.y = 30;
 			text.selectable = false;
 			text.width = 700;
 			addChild(text);

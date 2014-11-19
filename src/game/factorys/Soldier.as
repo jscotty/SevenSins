@@ -18,6 +18,7 @@ package game.factorys
 		private var _healer:Boolean;
 		
 		private var _bullet:BulletArgerSoldier;
+		private var _shoot:Boolean = false;
 		
 		
 		private var counter:int;
@@ -33,13 +34,15 @@ package game.factorys
 			
 			//trace("HEALTH : " + health);
 				
-			for (var j:int = 0; j < Game.enemy.length; j++) {
+			for (var j:int = Game.enemy.length - 1; j >= 0 ; j--) {
 				var xposEnemy:int = this.x - Game.enemy[j].x;
 			}
-			for (var i:int = 0; i < Game.tower.length;i++){
+			for (var ii:int = 0; ii < Game.tower.length;ii++){
 				var xposTower:int = this.x - Game.tower[1].x;
 			}
 			
+			
+			trace("xpos! " + xposEnemy);
 			if (shooter == true) {
 				//hitTest
 				// Als de enemy tussen de 0 en 100 zit loopt de soldier niet
@@ -47,14 +50,39 @@ package game.factorys
 				
 				if (xposEnemy >= -200 || xposTower >= -200) {
 					speed = 0;
+					_shoot = true;
+					//trace(counter);
+					
+					if (xposTower >= -200) {
+						saveSpeed = 0;
+						speed = 0;
+						_shoot = true;
+					}
+					if (xposEnemy == 0 && xposTower <= -200) {
+						speed = saveSpeed;
+						_shoot = false;
+					}
+					if (_shoot == true) {
+						counter ++;
+						if (counter >= _hitCounter) {
+							shoot();
+							counter = 0;
+						}
+					}
+				}else {
+					//trace("cool");
+					speed = saveSpeed;
+				}
+			}else {
+				if (xposEnemy >= -20 || xposTower >= -20) {
+					speed = 0;
 					
 					counter ++;
 					//trace(counter);
 					if (counter >= _hitCounter) {
-						shoot();
 						counter = 0;
 					}
-					if (xposTower >= -200) {
+					if (xposTower >= -20) {
 						saveSpeed = 0;
 						speed = 0;
 					}
@@ -77,7 +105,7 @@ package game.factorys
 		public function damageEnemy():void
 		{
 			for (var i:int = 0; i < Game.enemy.length; i++) {
-				Game.enemy[i].health -= damage;
+				Game.enemy[0].health -= damage;
 			}
 		}
 		
