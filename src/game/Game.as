@@ -9,13 +9,14 @@ package game
 	import game.factorys.SoldierFactory;
 	import game.factorys.Tower;
 	import game.factorys.TowerFactory;
-	
+	import flash.events.KeyboardEvent;
 	/**
 	 * ...
 	 * @author justin Bieshaar
 	 */
-	public class Game extends Sprite 
+	public class Game extends Sprite
 	{
+	
 		private var _enemyFactory:EnemyFactory;
 		public static var enemy:Array;
 		private var _enemy:Enemy;
@@ -28,8 +29,33 @@ package game
 		public static var tower:Array;
 		private var _tower:Tower;
 		
+		private var dir:Number;
+		private var BG3:BackgroundL3;
+		private var BG2:BackgroundL2;
+		private var BG1:BackgroundL1;
+		private var cameraMov:CameraMovement;
+		
 		public function Game(s:Stage) 
 		{
+			
+			BG3 = new BackgroundL3;
+			BG2 = new BackgroundL2;
+			BG1 = new BackgroundL1;
+			cameraMov = new CameraMovement();
+			
+			s.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			s.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			
+			
+			BG3.scaleX = 3;
+			addChild(BG3);
+			
+			BG2.scaleX = 2;
+			addChild(BG2);
+			
+			BG1.scaleX = 4;
+			addChild(BG1);
+			
 			enemy = new Array();
 			for (var e:int = 0; e < 1; e++){
 				_enemyFactory = new EnemyFactory();
@@ -38,11 +64,11 @@ package game
 				addChild(_enemy);
 				enemy[e].behaviour();
 				enemy[e].x = 600 + e * 100;
-				enemy[e].y = 300;
+				enemy[e].y = 500;
 			}
 			
 			soldier = new Array();
-			for (var j:int = 0; j < 22; j++ ) {
+			for (var j:int = 0; j < 2; j++ ) {
 				_soldierFactory = new SoldierFactory();
 				_soldier = _soldierFactory.createSoldier(SoldierFactory.SOLDIER_ARGER);
 				addChild(_soldier);
@@ -50,7 +76,7 @@ package game
 				
 				soldier[j].behaviour();
 				soldier[j].x = 100 + j * -100;
-				soldier[j].y = 300;
+				soldier[j].y = 500;
 			}
 			
 			tower = new Array();
@@ -65,20 +91,35 @@ package game
 				
 				
 				tower[i].x = 100 + i * 500;
-				tower[i].y = 300;
+				tower[i].y = 500;
 			}
+			
 			
 			s.addEventListener(Event.ENTER_FRAME, update, false, 0, true);
 		}
 		
 		private function update(e:Event):void 
 		{
+			cameraMov.update(BG1, BG2, BG3);
+			
 			for (var i:int = enemy.length - 1; i >= 0; i--){
 				if (enemy[i].died == true) {
 					removeChild(enemy[i]);
 					enemy.splice(i, 1);
 				}
 			}
+		}
+		
+		
+		private function onKeyDown(e:KeyboardEvent)
+		{
+			cameraMov.onKeyDown(e);
+			
+		}
+		
+		private function onKeyUp(e:KeyboardEvent)
+		{
+			cameraMov.onKeyUp(e);
 		}
 	}
 }

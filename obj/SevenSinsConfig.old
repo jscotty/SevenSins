@@ -37,6 +37,7 @@
     </source-path>
     <library-path append="true">
       <path-element>C:\Users\justin\Desktop\seven sins\SevenSins\lib\assets.swc</path-element>
+      <path-element>C:\Users\justin\Desktop\seven sins\SevenSins\lib\SevenSinsPlaceHolders.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
