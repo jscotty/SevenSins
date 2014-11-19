@@ -19,6 +19,7 @@ package game.factorys
 		private var _hitCounter:Number;
 		private var _shooter:Boolean;
 		private var _healer:Boolean;
+		private var counter:int;
 		
 		public var died:Boolean = false;
 		
@@ -33,25 +34,81 @@ package game.factorys
 		{
 			this.x -= speed;
 			
-			trace("Enemy death!" + died);
+			//trace("Enemy death!" + died);
 			
-			var soldier:Soldier = Game.soldier;
-				if (this.hitTestPoint(soldier.x + 20, soldier.y)) {
-					speed = 0;
-				}else {
-					speed = saveSpeed;
-				}
+			for (var j:int = Game.soldier.length - 1; j > 0 ; j--) {
+				var xposSoldier:int = this.x - Game.soldier[j].x;
+			}
+			for (var ii:int = 0; ii < Game.tower.length;ii++){
+				var xposTower:int = this.x - Game.tower[0].x;
+			}
 			
+///////////////////////////////Attacks/Movement:
+			
+		for (var i:int = Game.soldier.length - 1; i > 0; i--) {
+			
+///////////////////////////////Shooter:
 			if (shooter == true) {
-				if (this.hitTestPoint(soldier.x - 100, soldier.y) || this.hitTestPoint(soldier.x - 60, soldier.y) || this.hitTestPoint(soldier.x - 20, soldier.y) || this.hitTestPoint(soldier.x, soldier.y)) {
+				if (xposSoldier >= 200 || xposTower >= 200) {
 					speed = 0;
+					
+					counter ++;
+					//trace(counter);
+					if (counter >= _hitCounter) {
+						shoot();
+						counter = 0;
+					}
+					if (xposTower >= 200) {
+						//trace("cool");
+						saveSpeed = 0;
+						speed = 0;
+					}
+					if (xposSoldier == 0) {
+						speed = saveSpeed;
+					}
 				}else {
+					//trace("cool");
 					speed = saveSpeed;
 				}
+			}else {
+//////////////////////////////Melee
+				if (xposSoldier <= 50 || xposTower <= 50) {
+					speed = 0;
+					
+					counter ++;
+					//trace(counter);
+					if (counter >= _hitCounter) {
+						damageEnemy();
+						counter = 0;
+					}
+					if (xposTower <= 50) {
+						saveSpeed = 0;
+						speed = 0;
+					}
+					if (xposSoldier == 0) {
+						speed = saveSpeed;
+					}
+				}else {
+					//trace("cool");
+					speed = saveSpeed;
+				}
+			}
 			}
 			
 			if (health <= 0) {
 				death();
+			}
+		}
+		
+		private function shoot():void 
+		{
+			trace("SHOOTINH");
+		}
+	
+		private function damageEnemy():void 
+		{
+			for (var i:int = 0; i < Game.soldier.length; i++) {
+				Game.soldier[i].health -= damage;
 			}
 		}
 		

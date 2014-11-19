@@ -21,7 +21,8 @@ package game
 		private var _enemy:Enemy;
 		
 		private var _soldierFactory:SoldierFactory;
-		public static var soldier:Soldier;
+		public static var soldier:Array;
+		private var _soldier:Soldier;
 		
 		private var _towerFactory:TowerFactory;
 		public static var tower:Array;
@@ -36,18 +37,21 @@ package game
 				enemy.push(_enemy);
 				addChild(_enemy);
 				enemy[e].behaviour();
-				enemy[e].x = 600;
+				enemy[e].x = 600 + e * 100;
 				enemy[e].y = 300;
 			}
 			
-			
-			_soldierFactory = new SoldierFactory();
-			soldier = _soldierFactory.createSoldier(SoldierFactory.SOLDIER_ARGER);
-			
-			soldier.behaviour();
-			soldier.x = 100;
-			soldier.y = 300;
-			addChild(soldier);
+			soldier = new Array();
+			for (var j:int = 0; j < 22; j++ ) {
+				_soldierFactory = new SoldierFactory();
+				_soldier = _soldierFactory.createSoldier(SoldierFactory.SOLDIER_ARGER);
+				addChild(_soldier);
+				soldier.push(_soldier);
+				
+				soldier[j].behaviour();
+				soldier[j].x = 100 + j * -100;
+				soldier[j].y = 300;
+			}
 			
 			tower = new Array();
 			for (var i:int = 0; i < 2; i++){

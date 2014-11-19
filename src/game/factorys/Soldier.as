@@ -31,18 +31,19 @@ package game.factorys
 		{
 			this.x += speed;
 			
+			//trace("HEALTH : " + health);
+				
+			for (var j:int = 0; j < Game.enemy.length; j++) {
+				var xposEnemy:int = this.x - Game.enemy[j].x;
+			}
+			for (var i:int = 0; i < Game.tower.length;i++){
+				var xposTower:int = this.x - Game.tower[1].x;
+			}
+			
 			if (shooter == true) {
 				//hitTest
 				// Als de enemy tussen de 0 en 100 zit loopt de soldier niet
-				
-				
-				for (var j:int = 0; j < Game.enemy.length; j++) {
-					var xposEnemy:int = this.x - Game.enemy[j].x;
-				}
-				for (var i:int = 0; i < Game.tower.length;i++){
-					var xposTower:int = this.x - Game.tower[1].x;
-				}
-				trace("xposenemy" + xposEnemy);
+				//trace("xposTower" + xposTower);
 				
 				if (xposEnemy >= -200 || xposTower >= -200) {
 					speed = 0;
@@ -53,12 +54,15 @@ package game.factorys
 						shoot();
 						counter = 0;
 					}
+					if (xposTower >= -200) {
+						saveSpeed = 0;
+						speed = 0;
+					}
 					if (xposEnemy == 0) {
-						trace("cool");
 						speed = saveSpeed;
 					}
 				}else {
-					trace("cool");
+					//trace("cool");
 					speed = saveSpeed;
 				}
 			}
