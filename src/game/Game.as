@@ -59,7 +59,7 @@ package game
 			enemy = new Array();
 			for (var e:int = 0; e < 5; e++){
 				_enemyFactory = new EnemyFactory();
-				_enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_SCOUT);
+				_enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_ARGER);
 				enemy.push(_enemy);
 				addChild(_enemy);
 				enemy[e].behaviour();
@@ -106,23 +106,46 @@ package game
 			cameraMov.update(BG1, BG2, BG3);
 			soldier.sortOn("x", Array.NUMERIC);
 			enemy.sortOn("x", Array.NUMERIC);
-			
-			for (var i:int = enemy.length - 1; i >= 0; i--){
+			/*
+			trace(soldier);
+			for (var sol:int = 0; sol < soldier.length; sol++) {
+				trace("sol1" + soldier[0]);
+				trace("sol2" + soldier[l]);
+			}
+			*/
+			enemyDeath();
+			soldierDeath();
+		}
+		
+		private function soldierDeath():void 
+		{
+			for (var i:int = soldier.length - 1; i >= 0; i--) {
+				if (soldier[i].died == true) {
+					removeChild(soldier[i]);
+					soldier.splice(i, 1);
+				}
+			}
+		}
+		
+		private function enemyDeath():void 
+		{
+			for (var i:int = enemy.length - 1; i >= 0; i--) {
 				if (enemy[i].died == true) {
 					removeChild(enemy[i]);
 					enemy.splice(i, 1);
 				}
 			}
+			
 		}
 		
 		
-		private function onKeyDown(e:KeyboardEvent)
+		private function onKeyDown(e:KeyboardEvent) :void
 		{
 			cameraMov.onKeyDown(e);
 			
 		}
 		
-		private function onKeyUp(e:KeyboardEvent)
+		private function onKeyUp(e:KeyboardEvent) :void
 		{
 			cameraMov.onKeyUp(e);
 		}

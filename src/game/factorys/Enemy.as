@@ -19,9 +19,11 @@ package game.factorys
 		private var _hitCounter:Number;
 		private var _shooter:Boolean;
 		private var _healer:Boolean;
+		
 		private var counter:int;
 		
 		public var died:Boolean = false;
+		public var _attack:Boolean = false;
 		
 		public function behaviour():void
 		{
@@ -44,49 +46,57 @@ package game.factorys
 				var xposTower:int = this.x - Game.tower[0].x;
 			}
 			
-///////////////////////////////Attacks/Movement:
-			
-			
-///////////////////////////////Shooter:
 			if (shooter == true) {
-				if (xposSoldier >= 200 || xposTower >= 200) {
+				//hitTest
+				// Als de enemy tussen de 0 en 100 zit loopt de soldier niet
+				
+				if (xposSoldier <= 200 || xposTower <= 200) {
 					speed = 0;
-					
-					counter ++;
+					_attack = true;
 					//trace(counter);
-					if (counter >= _hitCounter) {
-						shoot();
-						counter = 0;
-					}
+					
 					if (xposTower >= 200) {
-						//trace("cool");
 						saveSpeed = 0;
 						speed = 0;
+						_attack = true;
 					}
-					if (xposSoldier == 0) {
+					if (xposSoldier == 0 && xposTower <= 200) {
 						speed = saveSpeed;
+						_attack = false;
+					}
+					if (_attack == true) {
+						counter ++;
+						if (counter >= _hitCounter) {
+							shoot();
+							counter = 0;
+						}
 					}
 				}else {
 					//trace("cool");
 					speed = saveSpeed;
 				}
 			}else {
-//////////////////////////////Melee
-				if (xposSoldier <= 50 || xposTower <= 50) {
+				if (xposSoldier >= 20 || xposTower >= 20) {
 					speed = 0;
+					_attack = true;
 					
 					counter ++;
 					//trace(counter);
-					if (counter >= _hitCounter) {
-						damageSoldier();
-						counter = 0;
-					}
-					if (xposTower <= 50) {
+					if (xposTower >= 20) {
 						saveSpeed = 0;
 						speed = 0;
+						_attack = true;
 					}
 					if (xposSoldier == 0) {
 						speed = saveSpeed;
+						_attack = false;
+					}
+					if (_attack == true) {
+						counter ++;
+						if (counter >= _hitCounter) {
+							counter = 0;
+							damageSoldier();
+						}
 					}
 				}else {
 					//trace("cool");
@@ -107,10 +117,8 @@ package game.factorys
 		private function damageSoldier():void 
 		{
 			for (var i:int = 0; i < Game.soldier.length; i++) {
-				//Game.soldier[i].health -= damage;
-				var xposSoldier:int = this.x - Game.soldier[i].x;
-				//trace("soldiers pos: " + xposSoldier);
-				Game.soldier.sortOn("x", Array.NUMERIC);
+				var l:int = Game.soldier.length -1;
+				Game.soldier[l].health -= damage;
 			}
 		}
 		

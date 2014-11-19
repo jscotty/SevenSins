@@ -18,8 +18,9 @@ package game.factorys
 		private var _healer:Boolean;
 		
 		private var _bullet:BulletArgerSoldier;
-		private var _shoot:Boolean = false;
+		private var _attack:Boolean = false;
 		
+		public var died:Boolean = false;
 		
 		private var counter:int;
 		
@@ -42,7 +43,6 @@ package game.factorys
 			}
 			
 			
-			trace("xpos! " + xposEnemy);
 			if (shooter == true) {
 				//hitTest
 				// Als de enemy tussen de 0 en 100 zit loopt de soldier niet
@@ -50,19 +50,19 @@ package game.factorys
 				
 				if (xposEnemy >= -200 || xposTower >= -200) {
 					speed = 0;
-					_shoot = true;
+					_attack = true;
 					//trace(counter);
 					
 					if (xposTower >= -200) {
 						saveSpeed = 0;
 						speed = 0;
-						_shoot = true;
+						_attack = true;
 					}
 					if (xposEnemy == 0 && xposTower <= -200) {
 						speed = saveSpeed;
-						_shoot = false;
+						_attack = false;
 					}
-					if (_shoot == true) {
+					if (_attack == true) {
 						counter ++;
 						if (counter >= _hitCounter) {
 							shoot();
@@ -74,8 +74,9 @@ package game.factorys
 					speed = saveSpeed;
 				}
 			}else {
-				if (xposEnemy >= -20 || xposTower >= -20) {
+				if (xposEnemy >= -50 || xposTower >= -50) {
 					speed = 0;
+					_attack = true;
 					
 					counter ++;
 					//trace(counter);
@@ -85,15 +86,35 @@ package game.factorys
 					if (xposTower >= -20) {
 						saveSpeed = 0;
 						speed = 0;
+						_attack = true;
 					}
 					if (xposEnemy == 0) {
 						speed = saveSpeed;
+						_attack = false;
+					}
+					if (_attack == true) {
+						counter ++;
+						if (counter >= _hitCounter) {
+							damageEnemy();
+							counter = 0;
+						}
 					}
 				}else {
 					//trace("cool");
 					speed = saveSpeed;
 				}
 			}
+			
+			if (health <= 0) {
+				death();
+			}
+		}
+		
+		private function death():void 
+		{
+			removeEventListener(Event.ENTER_FRAME, update);
+			died = true;
+			//trace("DOOD!!!");
 		}
 		
 		private function shoot():void 
