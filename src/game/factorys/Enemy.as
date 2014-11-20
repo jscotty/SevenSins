@@ -21,14 +21,15 @@ package game.factorys
 		private var _healer:Boolean;
 		
 		private var counter:int;
+		private var _bullet:BulletArgerEnemy;
 		
 		public var died:Boolean = false;
 		public var _attack:Boolean = false;
 		
 		public function behaviour():void
 		{
-			trace("enemy hit " + damage + " and got an health of: " + health + " he hits every " + hitCounter + " seconds  Shooter = " + shooter + " Gives " + mana + " mana");
-			
+			//trace("enemy hit " + damage + " and got an health of: " + health + " he hits every " + hitCounter + " seconds  Shooter = " + shooter + " Gives " + mana + " mana");
+			trace(saveSpeed);
 			addEventListener(Event.ENTER_FRAME, update, false, 0, true);
 		}
 		
@@ -37,18 +38,21 @@ package game.factorys
 			this.x -= speed;
 			
 			//trace("Enemy death!" + died);
-			
-			for (var j:int = Game.soldier.length - 1; j > 0 ; j--) {
-				var xposSoldier:int = this.x - Game.soldier[j].x;
-				//trace(Game.soldier);
+			var l:int = Game.soldier.length;
+			for (var j:int = 0; j < l ; j++) {
+			var leng:int = Game.soldier.length - 1;
+				var xposSoldier:int = this.x - Game.soldier[leng].x;
+				//trace(xposSoldier);
 			}
 			for (var ii:int = 0; ii < Game.tower.length;ii++){
 				var xposTower:int = this.x - Game.tower[0].x;
 			}
+			//trace("xposSoldier:" + xposSoldier);
 			
 			if (shooter == true) {
 				//hitTest
 				// Als de enemy tussen de 0 en 100 zit loopt de soldier niet
+				//trace("xposTower" + xposTower);
 				
 				if (xposSoldier <= 200 || xposTower <= 200) {
 					speed = 0;
@@ -60,9 +64,12 @@ package game.factorys
 						speed = 0;
 						_attack = true;
 					}
-					if (xposSoldier == 0 && xposTower <= 200) {
+					if (xposSoldier == 0) {
 						speed = saveSpeed;
 						_attack = false;
+					}
+					if (xposSoldier == 0 && xposTower <= 200) {
+						_attack = true;
 					}
 					if (_attack == true) {
 						counter ++;
@@ -76,13 +83,18 @@ package game.factorys
 					speed = saveSpeed;
 				}
 			}else {
-				if (xposSoldier >= 20 || xposTower >= 20) {
+				//melee
+				trace("savespeed: " + saveSpeed);
+				if (xposSoldier <= 30 || xposTower <= 60) {
 					speed = 0;
 					_attack = true;
 					
 					counter ++;
 					//trace(counter);
-					if (xposTower >= 20) {
+					if (counter >= _hitCounter) {
+						counter = 0;
+					}
+					if (xposTower <= 20) {
 						saveSpeed = 0;
 						speed = 0;
 						_attack = true;
@@ -91,11 +103,18 @@ package game.factorys
 						speed = saveSpeed;
 						_attack = false;
 					}
+					if (xposSoldier == 0 && xposTower <= 60) {
+						counter ++;
+						if (counter >= _hitCounter) {
+							damageTower();
+							counter = 0;
+						}
+					}
 					if (_attack == true) {
 						counter ++;
 						if (counter >= _hitCounter) {
-							counter = 0;
 							damageSoldier();
+							counter = 0;
 						}
 					}
 				}else {
@@ -111,20 +130,27 @@ package game.factorys
 		
 		private function shoot():void 
 		{
-			trace("SHOOTINH");
+			_bullet = new BulletArgerEnemy();
+			addChild(_bullet);
 		}
 	
-		private function damageSoldier():void 
+		public function damageSoldier():void 
 		{
-			for (var i:int = 0; i < Game.soldier.length; i++) {
 				var l:int = Game.soldier.length -1;
+			for (var i:int = 0; i < Game.soldier.length; i++) {
 				Game.soldier[l].health -= damage;
+			}
+		}
+		
+		public function damageTower():void
+		{
+			for (var i:int = 0; i < Game.tower.length; i++) {
+				Game.tower[0].health -= damage / 2;
 			}
 		}
 		
 		public function death():void 
 		{
-			removeEventListener(Event.ENTER_FRAME, update);
 			died = true;
 		}
 		

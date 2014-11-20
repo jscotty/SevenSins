@@ -32,15 +32,15 @@ package game
 		private var dir:Number;
 		private var BG3:BackgroundL3;
 		private var BG2:BackgroundL2;
-		private var BG1:BackgroundL1;
+		private var BG1:BackgroundWalking;
 		private var cameraMov:CameraMovement;
 		
 		public function Game(s:Stage) 
 		{
 			
-			BG3 = new BackgroundL3;
-			BG2 = new BackgroundL2;
-			BG1 = new BackgroundL1;
+			BG3 = new BackgroundL3();
+			BG2 = new BackgroundL2();
+			BG1 = new BackgroundWalking();
 			cameraMov = new CameraMovement();
 			
 			s.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
@@ -53,13 +53,16 @@ package game
 			BG2.scaleX = 2;
 			addChild(BG2);
 			
-			BG1.scaleX = 4;
+			BG1.x = -200;
+			BG1.y = 500;
+			BG1.scaleX = 1.3;
+			BG1.scaleY = 1.3;
 			addChild(BG1);
 			
 			enemy = new Array();
 			for (var e:int = 0; e < 5; e++){
 				_enemyFactory = new EnemyFactory();
-				_enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_ARGER);
+				_enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_SCOUT);
 				enemy.push(_enemy);
 				addChild(_enemy);
 				enemy[e].behaviour();
@@ -68,7 +71,7 @@ package game
 			}
 			
 			soldier = new Array();
-			for (var j:int = 0; j < 2; j++ ) {
+			for (var j:int = 0; j < 1; j++ ) {
 				_soldierFactory = new SoldierFactory();
 				var count:int;
 				count ++
@@ -106,6 +109,9 @@ package game
 			cameraMov.update(BG1, BG2, BG3);
 			soldier.sortOn("x", Array.NUMERIC);
 			enemy.sortOn("x", Array.NUMERIC);
+			
+			var l:int = soldier.length - 1;
+			//trace(soldier[l].x);
 			/*
 			trace(soldier);
 			for (var sol:int = 0; sol < soldier.length; sol++) {
@@ -121,6 +127,7 @@ package game
 		{
 			for (var i:int = soldier.length - 1; i >= 0; i--) {
 				if (soldier[i].died == true) {
+					soldier[i].removeEventListener(Event.ENTER_FRAME, soldier[i].update);
 					removeChild(soldier[i]);
 					soldier.splice(i, 1);
 				}
@@ -131,6 +138,7 @@ package game
 		{
 			for (var i:int = enemy.length - 1; i >= 0; i--) {
 				if (enemy[i].died == true) {
+					enemy[i].removeEventListener(Event.ENTER_FRAME, enemy[i].update);
 					removeChild(enemy[i]);
 					enemy.splice(i, 1);
 				}

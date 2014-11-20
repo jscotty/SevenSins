@@ -1,17 +1,18 @@
 package game.factorys 
 {
 	import flash.events.Event;
-	import game.factorys.soldiers.ArgerSoldier;
+	import game.factorys.enemys.ArgerEnemy;
 	import game.Game;
+	
 	/**
 	 * ...
 	 * @author justin Bieshaar
 	 */
-	public class BulletArgerSoldier extends ArgerSoldier
+	public class BulletArgerEnemy extends ArgerEnemy 
 	{
 		private var bullet:BulletAsset;
 		
-		public function BulletArgerSoldier() 
+		public function BulletArgerEnemy() 
 		{
 			bullet = new BulletAsset();
 			addChild(bullet);
@@ -30,15 +31,15 @@ package game.factorys
 				//trace("dood");
 			}
 			
-			for (var j:int = 0; j < Game.enemy.length; j++){
-				if (bullet.hitTestObject(Game.enemy[j])) {
-					damageEnemy();
+			for (var j:int = 0; j < Game.soldier.length; j++){
+				if (bullet.hitTestObject(Game.soldier[j])) {
+					damageSoldier();
 					destroy();
 				}
 			}
 			
 			for (var i:int = 0; i < Game.tower.length; i++){
-				if (bullet.hitTestObject(Game.tower[1])) {
+				if (bullet.hitTestObject(Game.tower[0])) {
 					damageTower();
 					destroy();
 				}

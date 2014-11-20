@@ -11,9 +11,9 @@ package game
 	{
 		private var moveSpeed:Number = 0;
 		private var keyDown:Boolean;
-		private var speed1:Number = 1.5;
-		private var speed2:Number = 1;
-		private var speed3:Number = 0.5;
+		private var speed1:Number = 2.5;
+		private var speed2:Number = 2;
+		private var speed3:Number = 1.5;
 		
 		
 		public function CameraMovement() 
@@ -49,7 +49,7 @@ package game
 			}
 		}
 		
-		public function update(BG1:BackgroundL1, BG2:BackgroundL2, BG3:BackgroundL3):void
+		public function update(BG1:BackgroundWalking, BG2:BackgroundL2, BG3:BackgroundL3):void
 		{
 			BG1.x += moveSpeed * speed1;
 			for (var i:int = 0; i < Game.tower.length; i++) {

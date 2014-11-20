@@ -15,7 +15,7 @@ package game.factorys.soldiers
 			_soldier = new SoldierArger();
 			addChild(_soldier);
 			
-			health = 100;
+			health = 125;
 			damage = 25;
 			speed = 3;
 			saveSpeed = 3;

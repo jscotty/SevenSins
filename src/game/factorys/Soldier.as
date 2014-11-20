@@ -41,7 +41,7 @@ package game.factorys
 			for (var ii:int = 0; ii < Game.tower.length;ii++){
 				var xposTower:int = this.x - Game.tower[1].x;
 			}
-			
+			//trace("xposEnemy:" + xposEnemy);
 			
 			if (shooter == true) {
 				//hitTest
@@ -62,6 +62,9 @@ package game.factorys
 						speed = saveSpeed;
 						_attack = false;
 					}
+					if (xposEnemy == 0 && xposTower >= -200) {
+						_attack = true;
+					}
 					if (_attack == true) {
 						counter ++;
 						if (counter >= _hitCounter) {
@@ -74,7 +77,8 @@ package game.factorys
 					speed = saveSpeed;
 				}
 			}else {
-				if (xposEnemy >= -50 || xposTower >= -50) {
+				//melee
+				if (xposEnemy >= -30 || xposTower >= -30) {
 					speed = 0;
 					_attack = true;
 					
@@ -91,6 +95,13 @@ package game.factorys
 					if (xposEnemy == 0) {
 						speed = saveSpeed;
 						_attack = false;
+					}
+					if (xposEnemy == 0 && xposTower >= -30) {
+						counter ++;
+						if (counter >= _hitCounter) {
+							damageTower();
+							counter = 0;
+						}
 					}
 					if (_attack == true) {
 						counter ++;
@@ -112,7 +123,6 @@ package game.factorys
 		
 		private function death():void 
 		{
-			removeEventListener(Event.ENTER_FRAME, update);
 			died = true;
 			//trace("DOOD!!!");
 		}
