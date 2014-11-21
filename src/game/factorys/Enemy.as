@@ -24,7 +24,9 @@ package game.factorys
 		private var _bullet:BulletArgerEnemy;
 		
 		public var died:Boolean = false;
+		public var takeDamage:Boolean = false;
 		public var _attack:Boolean = false;
+		private var l:int;
 		
 		public function behaviour():void
 		{
@@ -35,6 +37,7 @@ package game.factorys
 		
 		public function update(e:Event):void 
 		{
+			
 			this.x -= speed;
 			
 			//trace("Enemy death!" + died);
@@ -47,34 +50,31 @@ package game.factorys
 			for (var ii:int = 0; ii < Game.tower.length;ii++){
 				var xposTower:int = this.x - Game.tower[0].x;
 			}
+			//trace(xposEnemy);
 			//trace("xposSoldier:" + xposSoldier);
 			
 			if (shooter == true) {
-				//hitTest
-				// Als de enemy tussen de 0 en 100 zit loopt de soldier niet
-				//trace("xposTower" + xposTower);
-				
-				if (xposSoldier <= 200 || xposTower <= 200) {
+				if (xposSoldier >= -200 || xposTower >= -200) {
 					speed = 0;
 					_attack = true;
 					//trace(counter);
 					
-					if (xposTower >= 200) {
+					if (xposTower >= -200) {
 						saveSpeed = 0;
 						speed = 0;
 						_attack = true;
 					}
-					if (xposSoldier == 0) {
+					if (xposSoldier == 0 && xposTower <= -200) {
 						speed = saveSpeed;
 						_attack = false;
 					}
-					if (xposSoldier == 0 && xposTower <= 200) {
+					if (xposSoldier == 0 && xposTower >= -200) {
 						_attack = true;
 					}
 					if (_attack == true) {
 						counter ++;
 						if (counter >= _hitCounter) {
-							shoot();
+							//shoot();
 							counter = 0;
 						}
 					}
@@ -84,7 +84,6 @@ package game.factorys
 				}
 			}else {
 				//melee
-				//trace("savespeed: " + saveSpeed);
 				if (xposSoldier <= 30 || xposTower <= 60) {
 					speed = 0;
 					_attack = true;
@@ -128,6 +127,12 @@ package game.factorys
 			}
 		}
 		
+		public function death():void 
+		{
+			died = true;
+			//trace("DOOD!!!");
+		}
+		
 		private function shoot():void 
 		{
 			_bullet = new BulletArgerEnemy();
@@ -136,10 +141,11 @@ package game.factorys
 	
 		public function damageSoldier():void 
 		{
-				var l:int = Game.soldier.length -1;
 			for (var i:int = 0; i < Game.soldier.length; i++) {
-				Game.soldier[l].health -= damage;
+			var leng:int = Game.soldier.length -1;
+				Game.soldier[leng].health -= damage;
 			}
+			
 		}
 		
 		public function damageTower():void
@@ -147,11 +153,6 @@ package game.factorys
 			for (var i:int = 0; i < Game.tower.length; i++) {
 				Game.tower[0].health -= damage / 2;
 			}
-		}
-		
-		public function death():void 
-		{
-			died = true;
 		}
 		
 		public function get health() :Number

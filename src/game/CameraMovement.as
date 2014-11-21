@@ -12,9 +12,9 @@ package game
 		private var moveSpeed:Number = 0;
 		private var keyDown:Boolean;
 		
-		public var speed1:Number = 2.5;
-		public var speed2:Number = 2;
-		public var speed3:Number = 1.5;
+		public var speed1:Number = 3.5;
+		public var speed2:Number = 3;
+		public var speed3:Number = 2.5;
 		
 		
 		public function CameraMovement() 

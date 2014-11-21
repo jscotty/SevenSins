@@ -33,7 +33,7 @@ package game.factorys
 		{
 			this.x += speed;
 			
-			trace("HEALTH : " + health);
+			//trace("HEALTH : " + health);
 				
 			for (var j:int = Game.enemy.length - 1; j >= 0 ; j--) {
 				var xposEnemy:int = this.x - Game.enemy[j].x;
@@ -44,10 +44,6 @@ package game.factorys
 			//trace("xposEnemy:" + xposEnemy);
 			
 			if (shooter == true) {
-				//hitTest
-				// Als de enemy tussen de 0 en 100 zit loopt de soldier niet
-				//trace("xposTower" + xposTower);
-				
 				if (xposEnemy >= -200 || xposTower >= -200) {
 					speed = 0;
 					_attack = true;
@@ -121,7 +117,7 @@ package game.factorys
 			}
 		}
 		
-		private function death():void 
+		public function death():void 
 		{
 			died = true;
 			//trace("DOOD!!!");

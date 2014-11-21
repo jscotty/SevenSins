@@ -25,7 +25,7 @@ package game
 		
 		private var _soldierFactory:SoldierFactory;
 		public static var soldier:Array;
-		//private var _soldier:Soldier;
+		private var _soldier:Soldier;
 		
 		private var _towerFactory:TowerFactory;
 		public static var tower:Array;
@@ -39,6 +39,8 @@ package game
 		
 		private var _troopsButton:PlaceHolderButtonSpawn;
 		private var _troopsButton2:PlaceHolderButtonSpawn;
+		private var sL:Number;
+		private var eL:Number;
 		private var l:Number;
 		
 		public var ui:UI;
@@ -76,7 +78,7 @@ package game
 				enemy.push(_enemy);
 				addChild(_enemy);
 				enemy[e].behaviour();
-				enemy[e].x = 2000 + e * 100;
+				enemy[e].x = 2000 + e * 500;
 				enemy[e].y = 500;
 			}
 			
@@ -143,7 +145,6 @@ package game
 		private function spawnScout():void 
 		{
 			for (var i:int = 0; i <= 1; i++ ) {
-				var _soldier:Soldier;
 				_soldierFactory = new SoldierFactory();
 				_soldier = _soldierFactory.createSoldier(SoldierFactory.SOLDIER_SCOUT);
 				addChild(_soldier);
@@ -152,6 +153,7 @@ package game
 				_soldier.behaviour();
 				_soldier.x = tower[0].x;
 				_soldier.y = 500;
+				
 				/*soldier[i].behaviour();
 				soldier[i].x = tower[0].x;
 				soldier[i].y = 500;*/
@@ -179,11 +181,42 @@ package game
 			soldier.sortOn("x", Array.NUMERIC);
 			enemy.sortOn("x", Array.NUMERIC);
 			
-			l = soldier.length - 1;
+			sL = soldier.length - 1;
+			eL = enemy.length - 1;
+			//trace(soldier[l]);
+			
+			for (var i:int = eL; i >= 0; i--) {
+					//trace(enemy[i].x - enemy[0].x);
+				if (i != 0) {
+					if(enemy[i].x - enemy[i - 1].x < 60){
+						enemy[i].speed = enemy[0].speed;
+					}
+				}
+			}
+			for (var j:int = sL; j >= 0; j--) {
+				/*if (j != 0) {
+					if(soldier[j].x - soldier[j - 1].x > 60){
+						soldier[j].speed = soldier[0].speed;
+					}
+				}*/
+			}
+			
 			
 			enemyDeath();
 			soldierDeath();
 			
+			damageSoldier();
+			
+		}
+		
+		private function damageSoldier():void 
+		{
+			for (var i:int = enemy.length - 1; i >= 0; i--) {
+				if (enemy[i].takeDamage == true) {
+					trace(soldier[l].health);
+					soldier[l].health -= enemy[i].damage;
+				}
+			}
 		}
 		
 		private function soldierDeath():void 
