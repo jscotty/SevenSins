@@ -84,7 +84,7 @@ package game.factorys
 				}
 			}else {
 				//melee
-				trace("savespeed: " + saveSpeed);
+				//trace("savespeed: " + saveSpeed);
 				if (xposSoldier <= 30 || xposTower <= 60) {
 					speed = 0;
 					_attack = true;

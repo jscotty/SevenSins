@@ -17,10 +17,11 @@ package game.factorys
 		public static const SOLDIER_HEALER:String = "healer";
 		public static const SOLDIER_ARGER:String = "arger";
 		
-		private var soldier:Soldier;
+		//private var soldier:Soldier;
 		
 		public function createSoldier(soldierType:String):Soldier
 		{
+			var soldier:Soldier;
 			if (soldierType == SOLDIER_SCOUT)
 			{
 				soldier = new ScoutSoldier();

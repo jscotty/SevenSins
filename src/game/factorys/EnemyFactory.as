@@ -15,10 +15,11 @@ package game.factorys
 		public static const ENEMY_HEALER:String = "healer";
 		public static const ENEMY_ARGER:String = "arger";
 		
-		private var enemy:Enemy;
+		//private var enemy:Enemy;
 		
 		public function createEnemy(enemyType:String):Enemy
 		{
+			var enemy:Enemy;
 			if (enemyType == ENEMY_SCOUT)
 			{
 				enemy = new ScoutEnemy();
