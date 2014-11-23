@@ -78,25 +78,12 @@ package game
 				enemy.push(_enemy);
 				addChild(_enemy);
 				enemy[e].behaviour();
-				enemy[e].x = 2000 + e * 500;
+				enemy[e].x = 2000 + e * 1500;
 				enemy[e].y = 500;
 			}
 			
 			soldier = new Array();
 			soldier = [];
-			/*for (var j:int = 0; j < 1; j++ ) {
-				_soldierFactory = new SoldierFactory();
-				var count:int;
-				count ++
-				if(count == 1) _soldier = _soldierFactory.createSoldier(SoldierFactory.SOLDIER_ARGER);
-				if(count == 2) _soldier = _soldierFactory.createSoldier(SoldierFactory.SOLDIER_SCOUT);
-				addChild(_soldier);
-				soldier.push(_soldier);
-				
-				soldier[j].behaviour();
-				soldier[j].x = 100 + j * -100;
-				soldier[j].y = 500;
-			}*/
 			
 			tower = new Array();
 			for (var i:int = 0; i < 2; i++){
@@ -144,7 +131,7 @@ package game
 		
 		private function spawnScout():void 
 		{
-			for (var i:int = 0; i <= 1; i++ ) {
+			for (var i:int = 0; i <= 0; i++ ) {
 				_soldierFactory = new SoldierFactory();
 				_soldier = _soldierFactory.createSoldier(SoldierFactory.SOLDIER_SCOUT);
 				addChild(_soldier);
@@ -162,7 +149,7 @@ package game
 		
 		private function spawnArger():void 
 		{
-			for (var i:int = 0; i <= 1; i++ ) {
+			for (var i:int = 0; i <= 0; i++ ) {
 				var _soldier:Soldier;
 				_soldierFactory = new SoldierFactory();
 				_soldier = _soldierFactory.createSoldier(SoldierFactory.SOLDIER_ARGER);
@@ -193,12 +180,17 @@ package game
 					}
 				}
 			}
+			
+			
 			for (var j:int = sL; j >= 0; j--) {
-				/*if (j != 0) {
-					if(soldier[j].x - soldier[j - 1].x > 60){
+			
+				if (j != 0) {	
+					var row:int = soldier[j].x - soldier[j - 1].x;
+					trace(row);
+					if(row < 60){
 						soldier[j].speed = soldier[0].speed;
 					}
-				}*/
+				}
 			}
 			
 			

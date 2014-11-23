@@ -21,6 +21,7 @@ package game.factorys
 		private var _healer:Boolean;
 		
 		private var counter:int;
+		private var count:int;
 		private var _bullet:BulletArgerEnemy;
 		
 		public var died:Boolean = false;
@@ -31,7 +32,7 @@ package game.factorys
 		public function behaviour():void
 		{
 			//trace("enemy hit " + damage + " and got an health of: " + health + " he hits every " + hitCounter + " seconds  Shooter = " + shooter + " Gives " + mana + " mana");
-			trace(saveSpeed);
+			//trace(saveSpeed);
 			addEventListener(Event.ENTER_FRAME, update, false, 0, true);
 		}
 		
@@ -54,26 +55,25 @@ package game.factorys
 			//trace("xposSoldier:" + xposSoldier);
 			
 			if (shooter == true) {
-				if (xposSoldier >= -200 || xposTower >= -200) {
+				if (xposSoldier > -200 || xposTower > -200) {
 					speed = 0;
 					_attack = true;
 					//trace(counter);
 					
-					if (xposTower >= -200) {
+					if (xposTower > -200) {
 						saveSpeed = 0;
 						speed = 0;
-						_attack = true;
 					}
-					if (xposSoldier == 0 && xposTower <= -200) {
+					if (xposSoldier == 0 && xposTower < -200) {
 						speed = saveSpeed;
 						_attack = false;
 					}
-					if (xposSoldier == 0 && xposTower >= -200) {
+					if (xposSoldier == 0 && xposTower > -200) {
 						_attack = true;
 					}
 					if (_attack == true) {
 						counter ++;
-						if (counter >= _hitCounter) {
+						if (counter > _hitCounter) {
 							//shoot();
 							counter = 0;
 						}
@@ -84,34 +84,35 @@ package game.factorys
 				}
 			}else {
 				//melee
-				if (xposSoldier <= 30 || xposTower <= 60) {
+				if (xposSoldier < 30 || xposTower < 60) {
 					speed = 0;
 					_attack = true;
+						//trace("yo1");
 					
 					counter ++;
 					//trace(counter);
-					if (counter >= _hitCounter) {
+					if (counter > _hitCounter) {
 						counter = 0;
 					}
-					if (xposTower <= 20) {
+					if (xposTower < 60) {
 						saveSpeed = 0;
 						speed = 0;
-						_attack = true;
+						//trace("yo");
 					}
 					if (xposSoldier == 0) {
 						speed = saveSpeed;
 						_attack = false;
 					}
-					if (xposSoldier == 0 && xposTower <= 60) {
+					if (xposSoldier == 0 && xposTower < 60) {
 						counter ++;
-						if (counter >= _hitCounter) {
+						if (counter > _hitCounter) {
 							damageTower();
 							counter = 0;
 						}
 					}
 					if (_attack == true) {
 						counter ++;
-						if (counter >= _hitCounter) {
+						if (counter > _hitCounter) {
 							damageSoldier();
 							counter = 0;
 						}
@@ -142,7 +143,7 @@ package game.factorys
 		public function damageSoldier():void 
 		{
 			for (var i:int = 0; i < Game.soldier.length; i++) {
-			var leng:int = Game.soldier.length -1;
+				var leng:int = Game.soldier.length -1;
 				Game.soldier[leng].health -= damage;
 			}
 			

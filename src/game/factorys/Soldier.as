@@ -1,5 +1,6 @@
 package game.factorys 
 {
+	import assets.BloodDamage;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import game.Game;
@@ -9,6 +10,8 @@ package game.factorys
 	 */
 	public class Soldier extends Sprite
 	{
+		public var anim:Number = 0;
+		
 		private var _health:Number;
 		private var _damage:Number;
 		private var _speed:Number;
@@ -23,6 +26,10 @@ package game.factorys
 		public var died:Boolean = false;
 		
 		private var counter:int;
+		private var count:int;
+		private var deathCount:int;
+		private var blood:BloodDamage;
+		
 		
 		public function behaviour() :void
 		{	
@@ -44,24 +51,28 @@ package game.factorys
 			//trace("xposEnemy:" + xposEnemy);
 			
 			if (shooter == true) {
-				if (xposEnemy >= -200 || xposTower >= -200) {
+				if (xposEnemy > -200 || xposTower > -200) {
 					speed = 0;
+					anim = 0;
 					_attack = true;
 					//trace(counter);
 					
-					if (xposTower >= -200) {
+					if (xposTower > -200) {
 						saveSpeed = 0;
 						speed = 0;
 						_attack = true;
 					}
-					if (xposEnemy == 0 && xposTower <= -200) {
+					if (xposEnemy == 0) {
 						speed = saveSpeed;
+						anim = 0;
 						_attack = false;
 					}
-					if (xposEnemy == 0 && xposTower >= -200) {
+					if (xposTower > -200) {
+						speed = 0;
 						_attack = true;
 					}
 					if (_attack == true) {
+						anim = 2;
 						counter ++;
 						if (counter >= _hitCounter) {
 							shoot();
@@ -74,34 +85,38 @@ package game.factorys
 				}
 			}else {
 				//melee
-				if (xposEnemy >= -30 || xposTower >= -30) {
+				if (xposEnemy > -30 || xposTower > -60) {
 					speed = 0;
 					_attack = true;
+						anim = 0;
+						//trace("yo1");
 					
 					counter ++;
 					//trace(counter);
-					if (counter >= _hitCounter) {
+					if (counter > hitCounter) {
 						counter = 0;
 					}
-					if (xposTower >= -20) {
+					if (xposTower > -60) {
 						saveSpeed = 0;
 						speed = 0;
-						_attack = true;
+						//trace("yo");
 					}
 					if (xposEnemy == 0) {
 						speed = saveSpeed;
+						anim = 0;
 						_attack = false;
 					}
-					if (xposEnemy == 0 && xposTower >= -30) {
+					if (xposEnemy == 0 && xposTower > -60) {
 						counter ++;
-						if (counter >= _hitCounter) {
+						if (counter > hitCounter) {
 							damageTower();
 							counter = 0;
 						}
 					}
 					if (_attack == true) {
 						counter ++;
-						if (counter >= _hitCounter) {
+						anim = 2;
+						if (counter > hitCounter) {
 							damageEnemy();
 							counter = 0;
 						}
@@ -109,7 +124,9 @@ package game.factorys
 				}else {
 					//trace("cool");
 					speed = saveSpeed;
+						anim = 0;
 				}
+				
 			}
 			
 			if (health <= 0) {
@@ -119,7 +136,10 @@ package game.factorys
 		
 		public function death():void 
 		{
-			died = true;
+			anim = 3;
+			_attack = false;
+			deathCount ++;
+			if (deathCount == 40) died = true;
 			//trace("DOOD!!!");
 		}
 		
@@ -131,8 +151,15 @@ package game.factorys
 		
 		public function damageEnemy():void
 		{
-			for (var i:int = 0; i < Game.enemy.length; i++) {
-				Game.enemy[0].health -= damage;
+			for (var i:int = Game.enemy.length; i > 0; i--) {
+				count ++;
+				
+				if (count > _hitCounter) {
+						count = 0;
+				}
+				if (count <= 1) {
+					Game.enemy[0].health -= damage;
+				}
 			}
 		}
 		

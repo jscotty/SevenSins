@@ -17,7 +17,7 @@ package game.factorys.enemys
 			
 			
 			health = 100;
-			damage = 40;
+			damage = 10;
 			mana = 100;
 			speed = 4.1;
 			saveSpeed = 4.1;
