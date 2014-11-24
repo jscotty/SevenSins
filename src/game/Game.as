@@ -14,6 +14,9 @@ package game
 	import flash.events.KeyboardEvent;
 	/**
 	 * ...
+	 * 
+	 * Game project DIY
+	 * 
 	 * @author justin Bieshaar
 	 */
 	public class Game extends Sprite
@@ -38,7 +41,7 @@ package game
 		private var cameraMov:CameraMovement;
 		
 		private var _troopsButton:PlaceHolderButtonSpawn;
-		private var _troopsButton2:PlaceHolderButtonSpawn;
+		private var _troopArray:Array;
 		private var sL:Number;
 		private var eL:Number;
 		private var l:Number;
@@ -100,33 +103,89 @@ package game
 				tower[i].y = 500;
 			}
 			
-			_troopsButton = new PlaceHolderButtonSpawn();
-			_troopsButton.x = 20;
-			_troopsButton.y = 20;
-			addChild(_troopsButton);
-			s.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
-			
-			_troopsButton2 = new PlaceHolderButtonSpawn();
-			_troopsButton2.x = 20;
-			_troopsButton2.y = 150;
-			addChild(_troopsButton2);
+			_troopArray = new Array();
+			for (var b:int = 0; b < 5; b++) {
+				_troopsButton = new PlaceHolderButtonSpawn();
+				_troopArray.push(_troopsButton);
+				addChild(_troopsButton);
+				
+				_troopArray[b].x = 10;
+				_troopArray[b].y = 10 + b * 80;
+			}
 			
 			ui = new UI();
 			addChild(ui);
 			
+			
+			s.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
 			s.addEventListener(Event.ENTER_FRAME, update, false, 0, true);
 		}
 		
 		private function onClick(e:MouseEvent):void 
 		{
-			if (e.target == _troopsButton) {
+			if (e.target == _troopArray[0]) {
 				ui.mana -= 100;
 					spawnArger();
 			}
-			if (e.target == _troopsButton2) {
+			else if (e.target == _troopArray[1]) {
 				ui.mana -= 50;
 					spawnScout();
 			}
+			else if (e.target == _troopArray[2]) {
+				ui.mana -= 50;
+					spawnTank();
+			}
+			else if (e.target == _troopArray[3]) {
+				ui.mana -= 50;
+					spawnHealer();
+			}
+			else if (e.target == _troopArray[4]) {
+				ui.mana -= 50;
+					spawnCollecter();
+			}
+		}
+		
+		private function spawnCollecter():void 
+		{
+			for (var i:int = 0; i <= 0; i++ ) {
+				_soldierFactory = new SoldierFactory();
+				_soldier = _soldierFactory.createSoldier(SoldierFactory.SOLDIER_COLLECTER);
+				addChild(_soldier);
+				soldier.push(_soldier);
+				
+				_soldier.behaviour();
+				_soldier.x = tower[0].x;
+				_soldier.y = 500;
+			}
+		}
+		
+		private function spawnHealer():void 
+		{
+			for (var i:int = 0; i <= 0; i++ ) {
+				_soldierFactory = new SoldierFactory();
+				_soldier = _soldierFactory.createSoldier(SoldierFactory.SOLDIER_HEALER);
+				addChild(_soldier);
+				soldier.push(_soldier);
+				
+				_soldier.behaviour();
+				_soldier.x = tower[0].x;
+				_soldier.y = 500;
+			}
+		}
+		
+		private function spawnTank():void 
+		{
+			for (var i:int = 0; i <= 0; i++ ) {
+				_soldierFactory = new SoldierFactory();
+				_soldier = _soldierFactory.createSoldier(SoldierFactory.SOLDIER_TANK);
+				addChild(_soldier);
+				soldier.push(_soldier);
+				
+				_soldier.behaviour();
+				_soldier.x = tower[0].x;
+				_soldier.y = 500;
+			}
+			
 		}
 		
 		private function spawnScout():void 
@@ -186,9 +245,12 @@ package game
 			
 				if (j != 0) {	
 					var row:int = soldier[j].x - soldier[j - 1].x;
-					trace(row);
-					if(row < 60){
-						soldier[j].speed = soldier[0].speed;
+					//trace(soldier[j-1]);
+					if (row < 60) {
+						soldier[j - 1].speed = soldier[j].speed;
+						soldier[j-1].anim = 1;
+					}else {
+						soldier[j-1].anim = 0;
 					}
 				}
 			}

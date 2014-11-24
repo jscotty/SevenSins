@@ -19,9 +19,11 @@ package game.factorys
 		private var _hitCounter:Number;
 		private var _shooter:Boolean;
 		private var _healer:Boolean;
+		private var _collecter:Boolean;
 		
 		private var _bullet:BulletArgerSoldier;
 		private var _attack:Boolean = false;
+		public var attack:Boolean = false;
 		
 		public var died:Boolean = false;
 		
@@ -55,17 +57,20 @@ package game.factorys
 					speed = 0;
 					anim = 0;
 					_attack = true;
+						attack = true;
 					//trace(counter);
 					
 					if (xposTower > -200) {
 						saveSpeed = 0;
 						speed = 0;
 						_attack = true;
+						attack = true;
 					}
 					if (xposEnemy == 0) {
 						speed = saveSpeed;
 						anim = 0;
 						_attack = false;
+						attack = false;
 					}
 					if (xposTower > -200) {
 						speed = 0;
@@ -74,6 +79,7 @@ package game.factorys
 					if (_attack == true) {
 						anim = 2;
 						counter ++;
+						attack = true;
 						if (counter >= _hitCounter) {
 							shoot();
 							counter = 0;
@@ -83,6 +89,44 @@ package game.factorys
 					//trace("cool");
 					speed = saveSpeed;
 				}
+			}else if (healer == true) {
+				if (xposEnemy > -50 || xposTower > -50) {
+					speed = 0;
+					anim = 0;
+					_attack = true;
+						attack = true;
+					//trace(counter);
+					
+					if (xposTower > -50) {
+						health -= 1;
+					}
+					if (xposEnemy == 0) {
+						speed = saveSpeed;
+						anim = 0;
+						_attack = false;
+						attack = false;
+					}
+					if (_attack == true) {
+						anim = 2;
+						counter ++;
+						attack = true;
+						if (counter >= _hitCounter) {
+							heal();
+							counter = 0;
+						}
+					}
+				}else {
+					//trace("cool");
+					speed = saveSpeed;
+				}
+			}else if (collecter == true) {
+				if (xposEnemy > -50 || xposTower > -50) {
+					
+					if (xposTower > -20) {
+						death();
+						speed = 0;
+					}
+				}
 			}else {
 				//melee
 				if (xposEnemy > -30 || xposTower > -60) {
@@ -90,6 +134,8 @@ package game.factorys
 					_attack = true;
 						anim = 0;
 						//trace("yo1");
+						
+					attack = true;
 					
 					counter ++;
 					//trace(counter);
@@ -105,6 +151,7 @@ package game.factorys
 						speed = saveSpeed;
 						anim = 0;
 						_attack = false;
+						attack = false;
 					}
 					if (xposEnemy == 0 && xposTower > -60) {
 						counter ++;
@@ -116,6 +163,7 @@ package game.factorys
 					if (_attack == true) {
 						counter ++;
 						anim = 2;
+						attack = true;
 						if (counter > hitCounter) {
 							damageEnemy();
 							counter = 0;
@@ -124,6 +172,7 @@ package game.factorys
 				}else {
 					//trace("cool");
 					speed = saveSpeed;
+						attack = false;
 						anim = 0;
 				}
 				
@@ -132,6 +181,11 @@ package game.factorys
 			if (health <= 0) {
 				death();
 			}
+		}
+		
+		private function heal():void 
+		{
+			
 		}
 		
 		public function death():void 
@@ -238,6 +292,16 @@ package game.factorys
 		public function set healer(healer:Boolean):void
 		{
 			_healer = healer;
+		}
+		
+		public function get collecter() :Boolean
+		{
+			return _collecter;
+		}
+		
+		public function set collecter(collecter:Boolean):void
+		{
+			_collecter = collecter;
 		}
 	}
 

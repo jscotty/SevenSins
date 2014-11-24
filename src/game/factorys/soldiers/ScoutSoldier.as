@@ -94,7 +94,6 @@ package game.factorys.soldiers
 				soldierDeath.visible = false;
 				
 			} else if (anim == 2) {					// Atacking
-				trace(randomNumber);
 				
 				if (randomNumber == 0) {			//Attacking 1
 					soldierWalk.stop();

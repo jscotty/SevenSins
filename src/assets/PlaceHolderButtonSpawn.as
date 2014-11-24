@@ -11,7 +11,7 @@ package assets
 		public function PlaceHolderButtonSpawn() 
 		{
 			graphics.beginFill(0xff0000, 1);
-			graphics.drawRect(0, -5, 100, 70);
+			graphics.drawRect(0, -5, 70, 50);
 			graphics.endFill();
 		}
 		
