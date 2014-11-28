@@ -11,7 +11,7 @@ package game
 	public class UI extends Sprite
 	{
 		public var mana:Number = 4600;
-		public var sins:Number = 0;
+		public var sins:Number = 800;
 		private var _text:TextField;
 		private var _textSins:TextField;
 		private var tf:TextFormat;

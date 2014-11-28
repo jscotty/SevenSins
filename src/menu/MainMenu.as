@@ -6,6 +6,7 @@ package menu
 	import flash.events.MouseEvent;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
+	import flash.media.SoundTransform;
 	import flash.net.URLRequest;
 	/**
 	 * ...
@@ -14,7 +15,8 @@ package menu
 	public class MainMenu extends Sprite
 	{
 		private var _startGame:String = "startGame";
-		private var _gameS:String = "https://dl.dropboxusercontent.com/u/81369273/condemnation/looptrack.mp3";
+		private var _gameS:String = "looptrack.mp3";
+		private var _click:String = "click.mp3";
 		
 		private var _playButton:PlayButton;
 		private var _credButton:CreditsButton;
@@ -36,15 +38,23 @@ package menu
 		private var logo:LogoMenu;
 		
 		private var loopSound:Sound;
+		private var clickSound:Sound;
 		private var channel:SoundChannel;
+		private var channel2:SoundChannel;
+		
+		private var _soundTransform:SoundTransform;
 		
 		public function MainMenu() 
 		{
 			loopSound = new Sound();
+			clickSound = new Sound();
 			channel = new SoundChannel();
+			channel2 = new SoundChannel();
+			_soundTransform = new SoundTransform(0.1);
 			
 			loopSound.load(new URLRequest(_gameS));
-			channel = loopSound.play(0, 9999);
+			clickSound.load(new URLRequest(_click));
+			channel = loopSound.play(0, 9999,_soundTransform);
 			
 			bg = new BGMenu();
 			addChild(bg);
@@ -126,6 +136,7 @@ package menu
 		private function onClick(e:MouseEvent):void 
 		{
 			if (e.target == _playButton) {
+				channel2 = clickSound.play(0, 1);
 				dispatchEvent(new Event(_startGame));
 				channel.stop();
 			} 
@@ -150,6 +161,7 @@ package menu
 				_rightArr.visible = false;
 				
 				logo.visible = true;
+				channel2 = clickSound.play(0, 1);
 				
 			}
 			else if (e.target == _introButton) {
@@ -173,6 +185,7 @@ package menu
 				_rightArr.visible = false;
 				
 				logo.visible = false;
+				channel2 = clickSound.play(0, 1);
 				
 			}
 			else if (e.target == _backButton) {
@@ -196,6 +209,7 @@ package menu
 				_rightArr.visible = false;
 				
 				logo.visible = true;
+				channel2 = clickSound.play(0, 1);
 			}
 			else if (e.target == _leftArr) {
 				
@@ -218,6 +232,7 @@ package menu
 				_rightArr.visible = true;
 				
 				logo.visible = false;
+				channel2 = clickSound.play(0, 1);
 			}
 			else if (e.target == _rightArr) {
 				
@@ -240,6 +255,7 @@ package menu
 				_rightArr.visible = false;
 				
 				logo.visible = false;
+				channel2 = clickSound.play(0, 1);
 			}
 		}
 		

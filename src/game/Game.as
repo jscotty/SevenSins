@@ -75,7 +75,7 @@ package game
 		private var _healS:String = "healing.mp3";
 		private var _collectS:String = "pickup.mp3";
 		private var _introS:String = "introGame.mp3";
-		private var _gameS:String = "https://dl.dropboxusercontent.com/u/81369273/condemnation/looptrack.mp3";
+		private var _gameS:String = "looptrack.mp3";
 		
 		private var healSound:Sound;
 		private var collectSound:Sound;
@@ -85,6 +85,9 @@ package game
 		private var introChannel:SoundChannel;
 		
 		private var playcount:int;
+		private var buyAble:Boolean = true;
+		
+		public static var towerAngel:SoldierTower;
 		
 		public function Game(s:Stage) 
 		{
@@ -136,24 +139,16 @@ package game
 				_pickup.pickupBehaviour();
 			}
 			
-			enemy = new Array();
-			enemy = [];
-			for (var e:int = 0; e < 2; e++) {
-				var _enemy:Enemy;
-				_enemyFactory = new EnemyFactory();
-				_enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_TANK);
-				enemy.push(_enemy);
-				addChild(_enemy);
-				enemy[e].behaviour();
-				enemy[e].x = 2000 + e * 1500;
-				enemy[e].y = 520;
-			}
-			
 			soldier = new Array();
 			soldier = [];
 			
 			soldierCollecter = new Array();
 			soldierCollecter = [];
+			
+			towerAngel = new SoldierTower();
+			addChild(towerAngel);
+			towerAngel.x = 100;
+			towerAngel.y = 500;
 			
 			tower = new Array();
 			for (var i:int = 0; i < 2; i++){
@@ -191,6 +186,20 @@ package game
 				_troopArray[b].y = 10;
 			}
 			
+			
+			enemy = new Array();
+			enemy = [];
+			for (var e:int = 0; e < 1; e++) {
+				var _enemy:Enemy;
+				_enemyFactory = new EnemyFactory();
+				_enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_ARGER);
+				enemy.push(_enemy);
+				addChild(_enemy);
+				enemy[e].behaviour();
+				enemy[e].x = 2000 + e * 1500;
+				enemy[e].y = 520;
+			}
+			
 			ui = new UI();
 			addChild(ui);
 			
@@ -217,43 +226,89 @@ package game
 		
 		private function onClick(e:MouseEvent):void 
 		{
-		if(paused == false){
-			if(buying == true){
-				if (e.target == _troopArray[0]) {
-					if (ui.mana >= 200) {
-						ui.mana -= 200;
-						spawnCollecter();
+		if (paused == false) {
+			if (buyAble == true) {
+				if(buying == true){
+					if (e.target == _troopArray[0]) {
+						if (ui.mana >= 200) {
+							ui.mana -= 200;
+							spawnCollecter();
+						}
+					}
+					else if (e.target == _troopArray[1]) {
+						if (ui.mana >= 300) {
+							ui.mana -= 300;
+							spawnScout();
+						}
+					}
+					else if (e.target == _troopArray[2]) {
+						if (ui.mana >= 500) {
+							ui.mana -= 500;
+							spawnArger();
+						}
+					}
+					else if (e.target == _troopArray[3]) {
+						if (ui.mana >= 800) {
+							ui.mana -= 800;
+							spawnHealer();
+						}
+					}
+					else if (e.target == _troopArray[4]) {
+						if (ui.mana >= 1200) {
+							ui.mana -= 1200;
+							spawnTank();
+						}
 					}
 				}
-				else if (e.target == _troopArray[1]) {
-					if (ui.mana >= 300) {
-						ui.mana -= 300;
-						spawnScout();
-					}
-				}
-				else if (e.target == _troopArray[2]) {
-					if (ui.mana >= 500) {
-						ui.mana -= 500;
-						spawnArger();
-					}
-				}
-				else if (e.target == _troopArray[3]) {
-					if (ui.mana >= 800) {
-						ui.mana -= 800;
-						spawnHealer();
-					}
-				}
-				else if (e.target == _troopArray[4]) {
-					if (ui.mana >= 1200) {
-						ui.mana -= 1200;
-						spawnTank();
-					}
-				}
-			}else {
-				
 			}
+				if (e.target == _troopArray[5]) {
+					if (ui.sins >= 200) {	
+						ui.sins -= 200;
+						
+						healSpec();
+					}
+				}
+				else if (e.target == _troopArray[6]) {
+					if (ui.sins >= 300) {	
+						ui.sins -= 300;
+						
+						buffSpec();
+					}
+				}
+				else if (e.target == _troopArray[7]) {
+					if (ui.sins >= 500) {	
+						ui.sins -= 500;
+						
+						judgementSpec();
+					}
+				}
+				
 		}else {
 		}
+		}
+		
+		
+		private function healSpec():void 
+		{
+				channel = healSound.play(0, 1);
+			for (var i:int = 0; i < soldier.length; i++) {
+				trace(soldier[i].health);
+				soldier[i].health += 50; 
+			}
+				
+					_heal = new HealingAngel();
+					addChild(_heal);
+					addEventListener(Event.ENTER_FRAME, healPos2);
+		}
+		
+		private function buffSpec():void 
+		{
+			
+		}
+		
+		private function judgementSpec():void 
+		{
+			
 		}
 		
 		private function spawnCollecter():void 
@@ -341,8 +396,14 @@ package game
 			for (var i:int = eL; i >= 0; i--) {
 					//trace(enemy[i].x - enemy[0].x);
 				if (i != 0) {
-					if(enemy[i].x - enemy[i - 1].x < 60){
+					if(enemy[i].x - enemy[i - 1].x < 90){
 						enemy[i].speed = enemy[0].speed;
+						if (enemy[0].anim == 2) {
+							enemy[i].anim = 1;
+						}
+						else if (enemy[0].anim == 1) {
+							enemy[i].anim = 1;
+						}
 					}
 				}
 			}
@@ -372,6 +433,14 @@ package game
 						
 					}
 				}
+				
+				if (soldier[0].x > 200) {
+					buyAble = true;
+				}else if (soldier[0].x == 0) {
+					buyAble = true;
+				}else {
+					buyAble = false;
+				}
 			}
 			
 			
@@ -382,7 +451,7 @@ package game
 				_troopArray[3].alpha = 0.7;
 				_troopArray[4].alpha = 0.7;
 			}
-			if (ui.mana <= 199) {
+			else if (ui.mana <= 199) {
 				_troopArray[0].alpha = 0.7;
 				_troopArray[1].alpha = 0.7;
 				_troopArray[2].alpha = 0.7;
@@ -422,6 +491,31 @@ package game
 				_troopArray[2].alpha = 1;
 				_troopArray[3].alpha = 1;
 				_troopArray[4].alpha = 1;
+			}
+			
+			if (ui.sins <= 0) {
+				_troopArray[5].alpha = 0.7;
+				_troopArray[6].alpha = 0.7;
+				_troopArray[7].alpha = 0.7;
+			}
+			else if (ui.sins <= 199) {
+				_troopArray[5].alpha = 0.7;
+				_troopArray[6].alpha = 0.7;
+				_troopArray[7].alpha = 0.7;
+			}
+			else if (ui.sins <= 299) {
+				_troopArray[5].alpha = 1;
+				_troopArray[6].alpha = 0.7;
+				_troopArray[7].alpha = 0.7;
+			}
+			else if (ui.sins <= 499) {
+				_troopArray[5].alpha = 1;
+				_troopArray[6].alpha = 1;
+				_troopArray[7].alpha = 0.7;
+			}else {
+				_troopArray[5].alpha = 1;
+				_troopArray[6].alpha = 1;
+				_troopArray[7].alpha = 1;
 			}
 			enemyDeath();
 			soldierDeath();
@@ -466,6 +560,21 @@ package game
 				removeChild(_heal);
 				removeEventListener(Event.ENTER_FRAME, healPos);
 			}
+		}
+		private function healPos2(e:Event):void 
+		{
+				_heal.x = 300;
+				_heal.y = 100;
+				
+				_heal.scaleX = 15;
+				_heal.scaleY = 15;
+				
+			
+			
+				if (_heal.currentFrame >= _heal.totalFrames) {
+					removeEventListener(Event.ENTER_FRAME, healPos2);
+					removeChild(_heal);
+				}
 		}
 		
 		private function collect():void 

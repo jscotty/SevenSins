@@ -73,13 +73,13 @@ package game.factorys
 			//trace("xposSoldier:" + xposSoldier);
 			
 			if (shooter == true) {
-				if (xposSoldier >= -200 || xposTower >= -200) {
+				if (xposSoldier <= 400 || xposTower <= 600) {
 					speed = 0;
 					attack = true;
 					anim = 2;
 					//trace(counter);
 					
-					if (xposTower >= -200) {
+					if (xposTower <= 600) {
 						saveSpeed = 0;
 						speed = 0;
 					}
@@ -88,42 +88,42 @@ package game.factorys
 						attack = false;
 						anim = 0;
 					}
-					if (xposTower >= -202) {
+					if (xposTower <= 600) {
 						attack = true;
 					}
 					if (attack == true) {
 						counter ++;
 						if (counter >= _hitCounter) {
-							//shoot();
+							shoot();
 							anim = 2;
-							counter = 0;
 						}
 					}
 				}else {
 					//trace("cool");
 					speed = saveSpeed;
 						anim = 0;
+						attack = false;
 				}
 			}else {
 				//melee
-				if (xposSoldier <= 80 || xposTower <= 60) {
+				if (xposSoldier <= 80 || xposTower <= 260) {
 					speed = 0;
 					attack = true;
 						anim = 2;
 						//trace("yo1");
 					
-					if (xposTower <= 60) {
-						saveSpeed = 0;
-						speed = 0;
-						anim = 2;
-						//trace("yo");
-					}
 					if (xposSoldier == 0) {
 						speed = saveSpeed;
 						attack = false;
 						anim = 0;
 					}
-					if (xposTower <= 60) {
+					if (xposTower <= 260) {
+						saveSpeed = 0;
+						speed = 0;
+						anim = 2;
+						//trace("yo");
+					}
+					if (xposTower <= 260) {
 						counter ++;
 						if (counter > _hitCounter) {
 							damageTower();
@@ -168,13 +168,21 @@ package game.factorys
 		
 		private function shoot():void 
 		{
-			_bullet = new BulletArgerEnemy();
-			addChild(_bullet);
+			//trace(count);
+			count ++;
+			if (count == hitCounter) {
+				_bullet = new BulletArgerEnemy();
+				addChild(_bullet);
+				channel = shootSound.play(0, 1);
+			}
+			if (count >= 40) {
+				count = 0;
+			}
 		}
 	
 		public function damageSoldier():void 
 		{
-			trace("ATTACK!");
+			//trace("ATTACK!");
 				var leng:int = Game.soldier.length -1;
 				Game.soldier[leng].health -= damage;
 			

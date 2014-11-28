@@ -4,6 +4,7 @@ package game.factorys
 	import flash.events.Event;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import game.Game;
 	/**
 	 * ...
 	 * @author justin Bieshaar
@@ -12,15 +13,19 @@ package game.factorys
 	{
 		private var _health:Number;
 		private var _damage:Number;
+		private var _hitCounter:Number;
+		
 		private var tf:TextFormat;
 		private var text:TextField;
 		
 		public var anim:Number;
+		public var attack:Boolean = false;
 		
 		private var counter:int = 0;
 		
 		public function Tower()
 		{
+			anim = 0;
 			tf = new TextFormat("Arial", 25, 0xf15822, false);
 			text = new TextField();
 			text.text = "";
@@ -47,6 +52,19 @@ package game.factorys
 				text.text = "death";
 				text.setTextFormat(tf);
 			}
+			if (attack == true) {
+				counter ++;
+				if (counter > hitCounter) {
+					damageEnemy();
+					counter = 0;
+				}
+			}
+			//trace(attack);
+		}
+		
+		private function damageEnemy():void 
+		{	
+			Game.enemy[0].health -= damage;
 		}
 		
 		public function get health() :Number
@@ -67,6 +85,16 @@ package game.factorys
 		public function set damage(damage:Number):void 
 		{
 			_damage = damage;
+		}
+		
+		public function get hitCounter():Number 
+		{
+			return _hitCounter;
+		}
+		
+		public function set hitCounter(hitCounter:Number):void 
+		{
+			_hitCounter = hitCounter;
 		}
 		
 	}

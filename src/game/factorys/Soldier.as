@@ -75,19 +75,19 @@ package game.factorys
 			//trace("xposEnemy:" + xposEnemy);
 			
 			if (shooter == true) {
-				if (xposEnemy > -400 || xposTower > -400) {
+				if (xposEnemy > -400 || xposTower > -600) {
 					speed = 0;
 					anim = 2;
 					attack = true;
 					//trace(counter);
 					
-					if (xposTower >= -400) {
+					if (xposTower >= -600) {
 						saveSpeed = 0;
 						speed = 0;
 						attack = true;
 						anim = 2;
 					}
-					if (xposEnemy == 0 && xposTower < -400) {
+					if (xposEnemy == 0 && xposTower < -600) {
 						speed = saveSpeed;
 						anim = 0;
 						attack = false;
@@ -129,11 +129,12 @@ package game.factorys
 						healCount ++;
 						if (healCount == 1) heal();
 						if (healCount > 1) healing = false;
+						if (xposTower >= - 300) health -= 100;
 					}else {
 						healCount = 0;
 						healing = false;
 					}
-					trace(counter);
+					//trace(counter);
 				if (xposEnemy >= -50 || xposTower >= -50) {
 					speed = 0;
 					

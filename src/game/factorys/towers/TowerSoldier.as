@@ -2,6 +2,7 @@ package game.factorys.towers
 {
 	import flash.events.Event;
 	import game.factorys.Tower;
+	import game.Game;
 	
 	/**
 	 * ...
@@ -21,32 +22,52 @@ package game.factorys.towers
 			
 			idle = new GateCeeperAngelIdle();
 			idle.x = 100;
-			idle.y = -200;
+			idle.y = -100;
 			addChild(idle);
 			idle.visible = true
 			idle.play();
 			
 			att = new GateCeeperAngelAtt();
 			att.x = 100;
-			att.y = -200;
+			att.y = -100;
 			addChild(att);
 			att.visible = false;
 			att.stop();
 			
 			death = new GateCeeperAngelDeath();
 			death.x = 100;
-			death.y = -200;
+			death.y = -100;
 			addChild(death);
 			death.visible = false;
 			death.stop();
 			
 			health = 1000;
+			hitCounter = 20;
+			damage = 10;
 			
 			addEventListener(Event.ENTER_FRAME, animation);
 		}
 		
 		private function animation(e:Event):void 
 		{
+			for (var j:int = Game.enemy.length - 1; j >= 0 ; j--) {
+				var xposEnemy:int = this.x - Game.enemy[j].x;
+			}
+			//trace(xposEnemy);
+			
+			if (xposEnemy >= -260) {
+				if (xposEnemy == 0) {
+					anim = 0;
+					attack = false;
+				}else {
+					anim = 1;
+					attack = true;
+				}
+			}else {
+				anim = 0;
+				attack = false;
+			}
+			
 			if (anim == 0) {
 				idle.visible = true
 				idle.play();

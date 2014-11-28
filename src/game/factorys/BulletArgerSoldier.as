@@ -62,7 +62,7 @@ package game.factorys
 		
 		private function damageEnemy():void 
 		{
-			for (var i:int = Game.enemy.length; i > 0; i--) {
+			for (var i:int = Game.enemy.length - 1; i > 0; i--) {
 				
 					Game.enemy[0].health -= damage / 3;
 			}

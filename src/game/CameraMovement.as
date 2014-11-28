@@ -73,6 +73,7 @@ package game
 			for (var ij:int = 0; ij < Game.pickup.length; ij++) {
 				Game.pickup[ij].x += moveSpeed * speed1;
 			}
+			Game.towerAngel.x  += moveSpeed * speed1;
 			
 			BG1.x += moveSpeed * speed1;
 			BG2.x += moveSpeed * speed2;

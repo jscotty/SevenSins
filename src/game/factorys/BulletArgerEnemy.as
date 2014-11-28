@@ -1,5 +1,6 @@
 package game.factorys 
 {
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import game.factorys.enemys.ArgerEnemy;
 	import game.Game;
@@ -8,47 +9,73 @@ package game.factorys
 	 * ...
 	 * @author justin Bieshaar
 	 */
-	public class BulletArgerEnemy extends ArgerEnemy 
+	public class BulletArgerEnemy extends Sprite 
 	{
-		private var bullet:BulletAsset;
+		private var bullet:ArrowEnemy;
+		private var damage:int = 103;
+		private var count:int = 0;
 		
 		public function BulletArgerEnemy() 
 		{
-			bullet = new BulletAsset();
+			bullet = new ArrowEnemy();
 			addChild(bullet);
-			bullet.y = -30;
+			bullet.y = -35;
+			bullet.x = -35;
 			bullet.scaleX = 0.5;
 			bullet.scaleY = 0.5;
+			
+			this.rotation =  7;
+			this.scaleX = 2;
+			this.scaleY = 2;
+			this.y = - 131;
 			
 			addEventListener(Event.ENTER_FRAME, bulletBehaviour);
 		}
 		
 		private function bulletBehaviour(e:Event):void 
 		{
-			bullet.x += 10;
+			this.x -= 20;
 			
-			if (bullet.x >= 400) {
+		if (bullet.x >= 400) {
 				//trace("dood");
 			}
 			
 			for (var j:int = 0; j < Game.soldier.length; j++){
 				if (bullet.hitTestObject(Game.soldier[j])) {
-					damageSoldier();
+					damageEnemy();
 					destroy();
+					trace("hit soldier");
 				}
 			}
 			
-			for (var i:int = 0; i < Game.tower.length; i++){
-				if (bullet.hitTestObject(Game.tower[0])) {
+			
+				if (bullet.hitTestObject(Game.towerAngel)) {
 					damageTower();
 					destroy();
 				}
+			
+			
+			
+		}
+		
+		private function damageTower():void 
+		{
+			for (var i:int = 0; i < Game.tower.length; i++) {
+				Game.tower[0].health -= damage / 4;
+			}
+		}
+		
+		private function damageEnemy():void 
+		{
+			for (var j:int = 0; j < Game.soldier.length; j++){
+				var l:int = Game.soldier.length -1;
+					Game.soldier[l].health -= damage ;
 			}
 		}
 		
 		private function destroy():void 
 		{
-			removeEventListener(Event.ENTER_FRAME, update);
+			/*removeEventListener(Event.ENTER_FRAME, update);*/
 			removeChild(bullet);
 		}
 		

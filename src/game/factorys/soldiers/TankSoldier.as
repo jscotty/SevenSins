@@ -72,6 +72,7 @@ package game.factorys.soldiers
 				tankDeath.visible = false;
 				tankDeath.stop();
 			} else if (anim == 1) {
+				trace("attack");
 				tankMove.visible = true;
 				
 				tankAtt.visible = false;
