@@ -70,7 +70,7 @@ package game.factorys
 		
 		private function destroy():void 
 		{
-			/*removeEventListener(Event.ENTER_FRAME, update);*/
+			removeEventListener(Event.ENTER_FRAME, bulletBehaviour);
 			removeChild(bullet);
 		}
 		

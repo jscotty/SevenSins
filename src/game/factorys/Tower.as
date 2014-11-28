@@ -20,6 +20,7 @@ package game.factorys
 		
 		public var anim:Number;
 		public var attack:Boolean = false;
+		public var attack2:Boolean = false;
 		
 		private var counter:int = 0;
 		
@@ -59,7 +60,20 @@ package game.factorys
 					counter = 0;
 				}
 			}
+			if (attack2 == true) {
+				counter ++;
+				if (counter > hitCounter) {
+					damageSoldier();
+					counter = 0;
+				}
+			}
 			//trace(attack);
+		}
+		
+		private function damageSoldier():void 
+		{
+			var l:int = Game.soldier.length -1;
+			Game.soldier[l].health -= damage;
 		}
 		
 		private function damageEnemy():void 

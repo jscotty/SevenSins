@@ -12,7 +12,7 @@ package game.factorys
 	public class BulletArgerEnemy extends Sprite 
 	{
 		private var bullet:ArrowEnemy;
-		private var damage:int = 103;
+		private var damage:int = 13;
 		private var count:int = 0;
 		
 		public function BulletArgerEnemy() 

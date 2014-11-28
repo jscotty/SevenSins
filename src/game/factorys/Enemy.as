@@ -39,6 +39,8 @@ package game.factorys
 		private var shootSound:Sound;
 		private var deathSound:Sound;
 		private var channel:SoundChannel;
+		private var healCount:int;
+		private var healing:Boolean = false;
 		
 		public var anim:Number;
 		
@@ -104,6 +106,41 @@ package game.factorys
 						anim = 0;
 						attack = false;
 				}
+			}else if (healer == true) {
+				
+					counter ++;
+					if (counter >= _hitCounter) {
+						anim = 2;
+						counter ++;
+					
+						count ++;
+						if (count >= 55) {
+							anim = 0;
+							count = 0;
+							counter = 0;
+						}
+						
+						healCount ++;
+						if (healCount == 1) heal();
+						if (healCount > 1) healing = false;
+					}else {
+						healCount = 0;
+						healing = false;
+					}
+				if (xposSoldier <= 80 || xposTower <= 260) {
+					speed = 0;
+					
+					if (xposTower <= 260) {
+						health -= 20;
+					}
+					if (xposSoldier == 0) {
+						speed = saveSpeed;
+					}
+					
+				} else {
+					//trace("cool");
+					speed = saveSpeed;
+				}
 			}else {
 				//melee
 				if (xposSoldier <= 80 || xposTower <= 260) {
@@ -151,6 +188,11 @@ package game.factorys
 			}
 		}else {
 		}
+		}
+		
+		private function heal():void 
+		{
+			
 		}
 		
 		public function death():void 

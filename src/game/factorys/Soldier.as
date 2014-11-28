@@ -129,31 +129,27 @@ package game.factorys
 						healCount ++;
 						if (healCount == 1) heal();
 						if (healCount > 1) healing = false;
-						if (xposTower >= - 300) health -= 100;
 					}else {
 						healCount = 0;
 						healing = false;
 					}
-					//trace(counter);
-				if (xposEnemy >= -50 || xposTower >= -50) {
+				if (xposEnemy >= -50 || xposTower >= -150) {
 					speed = 0;
 					
-					if (xposTower >= -50) {
-						health -= 1;
+					if (xposTower >= -150) {
+						health -= 20;
 					}
 					if (xposEnemy == 0) {
 						speed = saveSpeed;
-						idle = false;
 					}
 					
 				} else {
 					//trace("cool");
 					speed = saveSpeed;
-						idle = false;
 				}
 			}else {
 				//melee
-				if (xposEnemy >= -30 || xposTower >= -90) {
+				if (xposEnemy >= -30 || xposTower >= -190) {
 					speed = 0;
 					anim = 2;
 						//trace("yo1");
@@ -166,7 +162,7 @@ package game.factorys
 					if (counter >= hitCounter) {
 						counter = 0;
 					}
-					if (xposTower >= -90) {
+					if (xposTower >= -190) {
 						saveSpeed = 0;
 						anim = 2;
 						speed = 0;
@@ -177,7 +173,7 @@ package game.factorys
 							counterTower = 0;
 						}
 					}
-					if (xposEnemy == 0 && xposTower < -90) {
+					if (xposEnemy == 0 && xposTower < -190) {
 						speed = saveSpeed;
 						anim = 0;
 						attack = false;

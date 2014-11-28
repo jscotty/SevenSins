@@ -86,8 +86,12 @@ package game
 		
 		private var playcount:int;
 		private var buyAble:Boolean = true;
+		private var _buff:BuffEffect;
+		private var _judge:JudgementEffect;
 		
 		public static var towerAngel:SoldierTower;
+		
+		private var waveCount:int;
 		
 		public function Game(s:Stage) 
 		{
@@ -145,6 +149,9 @@ package game
 			soldierCollecter = new Array();
 			soldierCollecter = [];
 			
+			enemy = new Array();
+			enemy = [];
+			
 			towerAngel = new SoldierTower();
 			addChild(towerAngel);
 			towerAngel.x = 100;
@@ -184,20 +191,6 @@ package game
 				
 				_troopArray[b].x = 10 + b * 80;
 				_troopArray[b].y = 10;
-			}
-			
-			
-			enemy = new Array();
-			enemy = [];
-			for (var e:int = 0; e < 1; e++) {
-				var _enemy:Enemy;
-				_enemyFactory = new EnemyFactory();
-				_enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_ARGER);
-				enemy.push(_enemy);
-				addChild(_enemy);
-				enemy[e].behaviour();
-				enemy[e].x = 2000 + e * 1500;
-				enemy[e].y = 520;
 			}
 			
 			ui = new UI();
@@ -292,7 +285,7 @@ package game
 		{
 				channel = healSound.play(0, 1);
 			for (var i:int = 0; i < soldier.length; i++) {
-				trace(soldier[i].health);
+				//trace(soldier[i].health);
 				soldier[i].health += 50; 
 			}
 				
@@ -303,12 +296,25 @@ package game
 		
 		private function buffSpec():void 
 		{
-			
+			for (var i:int = 0; i < soldier.length; i++) {
+				//trace(soldier[i].health);
+				soldier[i].damage += 5; 
+			}
+					_buff = new BuffEffect();
+					addChild(_buff);
+					addEventListener(Event.ENTER_FRAME, buffpos);
 		}
 		
 		private function judgementSpec():void 
 		{
-			
+			for (var i:int = 0; i < soldier.length; i++) {
+				//trace(soldier[i].health);
+				soldier[i].damage += 5; 
+				soldier[i].health += 50;
+			}
+					_judge = new JudgementEffect();
+					addChild(_judge);
+					addEventListener(Event.ENTER_FRAME, judgepos);
 		}
 		
 		private function spawnCollecter():void 
@@ -525,9 +531,35 @@ package game
 			
 			collect();
 			heal();
+			
+			waveSystem();
 		}else {
 		}
 			
+			
+		}
+		
+		private function waveSystem():void 
+		{
+			waveCount++;
+			
+			if (waveCount == 1) {
+				waveOne();
+			}
+		}
+		
+		private function waveOne():void 
+		{
+			for (var e:int = 0; e < 4; e++) {
+				var _enemy:Enemy;
+				_enemyFactory = new EnemyFactory();
+				_enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_SCOUT);
+				enemy.push(_enemy);
+				addChild(_enemy);
+				enemy[e].behaviour();
+				enemy[e].x = 2000 + e * 900;
+				enemy[e].y = 520;
+			}
 			
 		}
 		
@@ -575,6 +607,38 @@ package game
 					removeEventListener(Event.ENTER_FRAME, healPos2);
 					removeChild(_heal);
 				}
+		}
+		
+		private function buffpos(e:Event):void 
+		{
+			_buff.x = 400;
+			_buff.y = 300;
+				
+			_buff.scaleX = 15;
+			_buff.scaleY = 15;
+				
+			
+			
+			if (_buff.currentFrame >= _buff.totalFrames) {
+				removeEventListener(Event.ENTER_FRAME, buffpos);
+				removeChild(_buff);
+			}
+		}
+		
+		private function judgepos(e:Event):void 
+		{
+			_judge.x = 400;
+			_judge.y = 500;
+				
+			_judge.scaleX = 5;
+			_judge.scaleY = 5;
+				
+			
+			
+			if (_judge.currentFrame >= _judge.totalFrames) {
+				removeEventListener(Event.ENTER_FRAME, judgepos);
+				removeChild(_judge);
+			}
 		}
 		
 		private function collect():void 
