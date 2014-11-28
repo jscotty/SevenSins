@@ -13,13 +13,19 @@ package game
 		private var keyDown:Boolean;
 		
 		public var speed1:Number = 3.5;
-		public var speed2:Number = 3;
+		public var speed2:Number = 3.2;
 		public var speed3:Number = 2.5;
+		
+		private var saveSpeed1:Number;
+		private var saveSpeed2:Number;
+		private var saveSpeed3:Number;
 		
 		
 		public function CameraMovement() 
 		{
-			
+			saveSpeed1 = speed1;
+			saveSpeed2 = speed2;
+			saveSpeed3 = speed3;
 		}
 		
 		public function onKeyDown(e:KeyboardEvent):void
@@ -61,6 +67,13 @@ package game
 			for (var ii:int = 0; ii < Game.soldier.length; ii++) {
 				Game.soldier[ii].x += moveSpeed * speed1;
 			}
+			for (var jj:int = 0; jj < Game.soldierCollecter.length; jj++) {
+				Game.soldierCollecter[jj].x += moveSpeed * speed1;
+			}
+			for (var ij:int = 0; ij < Game.pickup.length; ij++) {
+				Game.pickup[ij].x += moveSpeed * speed1;
+			}
+			
 			BG1.x += moveSpeed * speed1;
 			BG2.x += moveSpeed * speed2;
 			BG3.x += moveSpeed * speed3;
@@ -74,10 +87,16 @@ package game
 				moveSpeed += 0.25;
 			}
 			
-			if (BG1.x >= 280) {
-				moveSpeed = -5;
+			
+			if (BG1.x >= 120) {
+				
 			} else if (BG1.x <= -1850) {
-				moveSpeed = 5;
+				
+			} else {
+				
+				speed1 = saveSpeed1;
+				speed2 = saveSpeed2;
+				speed3 = saveSpeed3;
 			}
 		}
 	}

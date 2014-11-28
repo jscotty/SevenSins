@@ -1,13 +1,14 @@
 package game.factorys.soldiers 
 {
 	import flash.events.Event;
+	import game.factorys.Collecter;
 	import game.factorys.Soldier;
 	
 	/**
 	 * ...
 	 * @author justin Bieshaar
 	 */
-	public class CollecterSoldier extends Soldier 
+	public class CollecterSoldier extends Collecter
 	{
 		private var colMove:CollecterSoldierMove;
 		private var colDeath:CollecterSoldierDeath;
@@ -23,17 +24,11 @@ package game.factorys.soldiers
 			colDeath.visible = false;
 			colDeath.stop();
 			colDeath.cacheAsBitmap = true;
-			/*
-			this.scaleX = 1.28;
-			this.scaleY = 1.28;*/
 			
-			health = 200;
-			damage = 0;
-			speed = 4;
-			hitCounter = 0;
-			shooter = false;
-			healer = false;
-			collecter = true;
+			this.scaleX = 0.28;
+			this.scaleY = 0.28;
+			
+			speed = 5;
 			
 			addEventListener(Event.ENTER_FRAME, animation);
 		}

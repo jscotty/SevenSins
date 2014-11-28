@@ -11,8 +11,13 @@ package game.factorys
 	public class Tower extends Sprite
 	{
 		private var _health:Number;
+		private var _damage:Number;
 		private var tf:TextFormat;
 		private var text:TextField;
+		
+		public var anim:Number;
+		
+		private var counter:int = 0;
 		
 		public function Tower()
 		{
@@ -35,7 +40,9 @@ package game.factorys
 			text.embedFonts;
 			}
 			
+			
 			if (health <= 0) {
+				anim = 2;
 				health = 0;
 				text.text = "death";
 				text.setTextFormat(tf);
@@ -50,6 +57,16 @@ package game.factorys
 		public function set health(health:Number) :void
 		{
 			_health = health;
+		}
+		
+		public function get damage():Number 
+		{
+			return _damage;
+		}
+		
+		public function set damage(damage:Number):void 
+		{
+			_damage = damage;
 		}
 		
 	}

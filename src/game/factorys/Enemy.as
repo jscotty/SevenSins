@@ -2,6 +2,9 @@ package game.factorys
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.media.Sound;
+	import flash.media.SoundChannel;
+	import flash.net.URLRequest;
 	import game.Game;
 	
 	/**
@@ -26,22 +29,37 @@ package game.factorys
 		
 		public var died:Boolean = false;
 		public var takeDamage:Boolean = false;
-		public var _attack:Boolean = false;
+		public var attack:Boolean = false;
 		private var l:int;
+		private var deathCount:int;
+		
+		
+		private var _shooting:String = "shoot.mp3";
+		private var _deathS:String = "death.mp3";
+		private var shootSound:Sound;
+		private var deathSound:Sound;
+		private var channel:SoundChannel;
+		
+		public var anim:Number;
 		
 		public function behaviour():void
 		{
-			//trace("enemy hit " + damage + " and got an health of: " + health + " he hits every " + hitCounter + " seconds  Shooter = " + shooter + " Gives " + mana + " mana");
-			//trace(saveSpeed);
+			shootSound = new Sound();
+			deathSound = new Sound();
+			channel = new SoundChannel();
+			
+			shootSound.load(new URLRequest(_shooting));
+			deathSound.load(new URLRequest(_deathS));
+			
 			addEventListener(Event.ENTER_FRAME, update, false, 0, true);
 		}
 		
 		public function update(e:Event):void 
 		{
-			
+		if(Game.paused == false){
 			this.x -= speed;
 			
-			//trace("Enemy death!" + died);
+			//trace("Enemy health!" + health);
 			var l:int = Game.soldier.length;
 			for (var j:int = 0; j < l ; j++) {
 			var leng:int = Game.soldier.length - 1;
@@ -55,83 +73,97 @@ package game.factorys
 			//trace("xposSoldier:" + xposSoldier);
 			
 			if (shooter == true) {
-				if (xposSoldier > -200 || xposTower > -200) {
+				if (xposSoldier >= -200 || xposTower >= -200) {
 					speed = 0;
-					_attack = true;
+					attack = true;
+					anim = 2;
 					//trace(counter);
 					
-					if (xposTower > -200) {
+					if (xposTower >= -200) {
 						saveSpeed = 0;
 						speed = 0;
 					}
-					if (xposSoldier == 0 && xposTower < -200) {
+					if (xposSoldier == 0) {
 						speed = saveSpeed;
-						_attack = false;
+						attack = false;
+						anim = 0;
 					}
-					if (xposSoldier == 0 && xposTower > -200) {
-						_attack = true;
+					if (xposTower >= -202) {
+						attack = true;
 					}
-					if (_attack == true) {
+					if (attack == true) {
 						counter ++;
-						if (counter > _hitCounter) {
+						if (counter >= _hitCounter) {
 							//shoot();
+							anim = 2;
 							counter = 0;
 						}
 					}
 				}else {
 					//trace("cool");
 					speed = saveSpeed;
+						anim = 0;
 				}
 			}else {
 				//melee
-				if (xposSoldier < 30 || xposTower < 60) {
+				if (xposSoldier <= 80 || xposTower <= 60) {
 					speed = 0;
-					_attack = true;
+					attack = true;
+						anim = 2;
 						//trace("yo1");
 					
-					counter ++;
-					//trace(counter);
-					if (counter > _hitCounter) {
-						counter = 0;
-					}
-					if (xposTower < 60) {
+					if (xposTower <= 60) {
 						saveSpeed = 0;
 						speed = 0;
+						anim = 2;
 						//trace("yo");
 					}
 					if (xposSoldier == 0) {
 						speed = saveSpeed;
-						_attack = false;
+						attack = false;
+						anim = 0;
 					}
-					if (xposSoldier == 0 && xposTower < 60) {
+					if (xposTower <= 60) {
 						counter ++;
 						if (counter > _hitCounter) {
 							damageTower();
 							counter = 0;
+							anim = 2;
 						}
 					}
-					if (_attack == true) {
+					if (attack == true) {
 						counter ++;
 						if (counter > _hitCounter) {
 							damageSoldier();
+							anim = 2;
 							counter = 0;
 						}
 					}
 				}else {
 					//trace("cool");
 					speed = saveSpeed;
+						anim = 0;
 				}
 			}
 			
 			if (health <= 0) {
 				death();
 			}
+		}else {
+		}
 		}
 		
 		public function death():void 
 		{
-			died = true;
-			//trace("DOOD!!!");
+			anim = 3;
+			attack = false;
+			deathCount ++;
+			health = -100;
+			counter = -100;
+			count ++;
+			speed = 0;
+			if(count == 1) channel = deathSound.play(0, 1);
+			if (deathCount == 40) died = true;
 		}
 		
 		private function shoot():void 
@@ -142,10 +174,9 @@ package game.factorys
 	
 		public function damageSoldier():void 
 		{
-			for (var i:int = 0; i < Game.soldier.length; i++) {
+			trace("ATTACK!");
 				var leng:int = Game.soldier.length -1;
 				Game.soldier[leng].health -= damage;
-			}
 			
 		}
 		

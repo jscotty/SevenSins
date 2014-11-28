@@ -26,10 +26,6 @@ package game.factorys
 			{
 				soldier = new ScoutSoldier();
 			}
-			else if (soldierType == SOLDIER_COLLECTER)
-			{
-				soldier = new CollecterSoldier();
-			}
 			else if (soldierType == SOLDIER_TANK)
 			{
 				soldier = new TankSoldier();
