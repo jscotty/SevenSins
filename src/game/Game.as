@@ -97,6 +97,8 @@ package game
 		
 		private var pickupNumber:int;
 		private var pickupX:int;
+		private var collecterBuy:int;
+		private var healerBuy:int;
 		
 		public function Game(s:Stage) 
 		{
@@ -229,8 +231,13 @@ package game
 				if(buying == true){
 					if (e.target == _troopArray[0]) {
 						if (ui.mana >= 200) {
-							ui.mana -= 200;
-							spawnCollecter();
+							collecterBuy ++;
+							if (collecterBuy == 1) {
+								ui.mana -= 200;
+								spawnCollecter();
+							}else {
+								
+							}
 						}
 					}
 					else if (e.target == _troopArray[1]) {
@@ -446,7 +453,9 @@ package game
 					}
 				}
 				
-				if (soldier[0].x > 200) {
+				var xpos:int = soldier[0].x - tower[0].x;
+				trace(xpos);
+				if (xpos > 120) {
 					buyAble = true;
 				}else if (soldier[0].x == 0) {
 					buyAble = true;
@@ -863,6 +872,8 @@ package game
 				if (soldierCollecter[i].died == true) {
 					removeChild(soldierCollecter[i]);
 					soldierCollecter.splice(i, 1);
+					
+					collecterBuy = 0;
 				}
 			}
 		}

@@ -42,7 +42,7 @@ package game.factorys.soldiers
 			trace("arger");
 			
 			health = 155;
-			damage = 5;
+			damage = 15;
 			speed = 4;
 			saveSpeed = 4;
 			hitCounter = 26;

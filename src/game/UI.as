@@ -10,7 +10,7 @@ package game
 	 */
 	public class UI extends Sprite
 	{
-		public var mana:Number = 750;
+		public var mana:Number = 1000;
 		public var sins:Number = 0;
 		private var _text:TextField;
 		private var _textSins:TextField;
