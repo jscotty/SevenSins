@@ -41,11 +41,11 @@ package game.factorys.enemys
 			
 			trace("arger");
 			
-			health = 145;
+			health = 155;
 			damage = 5;
-			speed = 7;
-			mana = 300;
-			saveSpeed = 7;
+			speed = 5;
+			mana = 450;
+			saveSpeed = 5;
 			hitCounter = 26;
 			shooter = true;
 			healer = false;

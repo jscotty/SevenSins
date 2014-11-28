@@ -27,10 +27,11 @@ package game.factorys
 		public function Tower()
 		{
 			anim = 0;
-			tf = new TextFormat("Arial", 25, 0xf15822, false);
+			tf = new TextFormat("Evil Bible", 25, 0xf15822, false);
 			text = new TextField();
 			text.text = "";
 			text.y = 30;
+			text.x = -60;
 			text.selectable = false;
 			text.width = 700;
 			addChild(text);

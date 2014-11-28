@@ -42,18 +42,22 @@ package game.factorys
 		private var channel:SoundChannel;
 		private var _shooting:String = "shoot.mp3";
 		private var _deathS:String = "death.mp3";
+		private var _hitS:String = "hit.mp3";
 		private var deathSound:Sound;
 		private var counterTower:int;
+		private var hitSound:Sound;
 		
 		
 		public function behaviour() :void
 		{	
 			shootSound = new Sound();
 			deathSound = new Sound();
+			hitSound = new Sound();
 			channel = new SoundChannel();
 			
 			shootSound.load(new URLRequest(_shooting));
 			deathSound.load(new URLRequest(_deathS));
+			hitSound.load(new URLRequest(_hitS));
 			
 			addEventListener(Event.ENTER_FRAME, update, false, 0, true);
 		}
@@ -246,6 +250,7 @@ package game.factorys
 		{
 					Game.enemy[0].health -= damage;
 					//trace("ATTACK!");
+				channel = hitSound.play(0, 1);
 			
 				
 		}

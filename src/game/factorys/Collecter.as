@@ -51,12 +51,15 @@ package game.factorys
 				}
 				speed -= speed * 2;
 				scaleX = -0.28;
+			}else if (xposPickup > 30) {
+				collectPickup = false;
 			}else {
 				collectPickup = false;
 				counter = 0;
 			}
 			if (collectPickup == true) {
 			}
+			
 			
 		}
 		

@@ -42,12 +42,12 @@ package game.factorys.enemys
 			this.scaleX = 0.8;
 			this.scaleY = 0.8;
 			
-			health = 150;
-			damage = 20;
+			health = 350;
+			damage = 40;
 			speed = 4.8;
-			mana = 300;
+			mana = 700;
 			saveSpeed = 4.8;
-			hitCounter = 30;
+			hitCounter = 27;
 			shooter = false;
 			healer = false;
 			

@@ -43,7 +43,7 @@ package game.factorys.towers
 			
 			health = 1000;
 			hitCounter = 20;
-			damage = 10;
+			damage = 20;
 			
 			addEventListener(Event.ENTER_FRAME, animation);
 		}

@@ -14,7 +14,7 @@ package game.factorys.pickups
 			pickup = new SilverPickup();
 			addChild(pickup);
 			
-			sins = 200;
+			sins = 250;
 		}
 		
 	}

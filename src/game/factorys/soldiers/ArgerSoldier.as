@@ -41,10 +41,10 @@ package game.factorys.soldiers
 			
 			trace("arger");
 			
-			health = 145;
+			health = 155;
 			damage = 5;
-			speed = 3;
-			saveSpeed = 3;
+			speed = 4;
+			saveSpeed = 4;
 			hitCounter = 26;
 			shooter = true;
 			healer = false;

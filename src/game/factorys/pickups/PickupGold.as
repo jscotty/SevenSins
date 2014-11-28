@@ -15,7 +15,7 @@ package game.factorys.pickups
 			pickup = new GoldPickup();
 			addChild(pickup);
 			
-			sins = 300;
+			sins = 500;
 			
 		}
 		

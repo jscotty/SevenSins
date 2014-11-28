@@ -92,6 +92,11 @@ package game
 		public static var towerAngel:SoldierTower;
 		
 		private var waveCount:int;
+		private var devilCount:int;
+		private var _heal2:HealingDevil;
+		
+		private var pickupNumber:int;
+		private var pickupX:int;
 		
 		public function Game(s:Stage) 
 		{
@@ -394,6 +399,7 @@ package game
 			cameraMov.update(BG1, BG2, BG3);
 			soldier.sortOn("x", Array.NUMERIC);
 			enemy.sortOn("x", Array.NUMERIC);
+			pickup.sortOn("x", Array.NUMERIC);
 			
 			sL = soldier.length - 1;
 			eL = enemy.length - 1;
@@ -531,8 +537,10 @@ package game
 			
 			collect();
 			heal();
+			healDevil();
 			
 			waveSystem();
+			
 		}else {
 		}
 			
@@ -541,10 +549,69 @@ package game
 		
 		private function waveSystem():void 
 		{
-			waveCount++;
 			
-			if (waveCount == 1) {
+			if (waveCount == 0) {
 				waveOne();
+				waveCount ++;
+			}
+			
+			else if (waveCount == 5) {
+				waveTwo();
+				waveCount ++;
+			}
+			
+			else if (waveCount == 10) {
+				waveThree();
+				waveCount ++;
+				devilCount = 0;
+			}
+			
+			else if (waveCount == 15) {
+				waveThree();
+				waveCount ++;
+				devilCount = 0;
+			}
+			
+			else if (waveCount == 20) {
+				waveFour();
+				waveCount ++;
+				devilCount = 0;
+			}
+			
+			else if (waveCount == 25) {
+				waveFive();
+				waveCount ++;
+				devilCount = 0;
+			}
+			
+			else if (waveCount == 30) {
+				waveFive();
+				waveCount ++;
+				devilCount = 0;
+			}
+			
+			else if (waveCount == 35) {
+				waveSix();
+				waveCount ++;
+				devilCount = 0;
+			}
+			
+			else if (waveCount == 43) {
+				waveSix();
+				waveCount ++;
+				devilCount = 0;
+			}
+			
+			else if (waveCount == 51) {
+				waveSix();
+				waveCount ++;
+				devilCount = 0;
+			}
+			
+			else if (waveCount == 59) {
+				waveSix();
+				waveCount ++;
+				devilCount = 0;
 			}
 		}
 		
@@ -557,12 +624,102 @@ package game
 				enemy.push(_enemy);
 				addChild(_enemy);
 				enemy[e].behaviour();
-				enemy[e].x = 2000 + e * 900;
+				enemy[e].x = 2300 + e * 1200;
+				enemy[e].y = 520;
+			}
+			
+		}
+		private function waveTwo():void 
+		{
+			for (var e:int = 0; e < 4; e++) {
+				var _enemy:Enemy;
+				_enemyFactory = new EnemyFactory();
+				devilCount ++;
+				if (devilCount == 3) _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_ARGER);
+				else _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_SCOUT);
+				enemy.push(_enemy);
+				addChild(_enemy);
+				enemy[e].behaviour();
+				enemy[e].x = 2300 + e * 800;
 				enemy[e].y = 520;
 			}
 			
 		}
 		
+		private function waveThree():void 
+		{
+			for (var e:int = 0; e < 4; e++) {
+				var _enemy:Enemy;
+				_enemyFactory = new EnemyFactory();
+				devilCount ++;
+				if (devilCount == 2) _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_ARGER);
+				if (devilCount == 3) _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_HEALER);
+				else _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_SCOUT);
+				enemy.push(_enemy);
+				addChild(_enemy);
+				enemy[e].behaviour();
+				enemy[e].x = 2300 + e * 500;
+				enemy[e].y = 520;
+			}
+			
+		}
+		
+		private function waveFour():void 
+		{
+			for (var e:int = 0; e < 4; e++) {
+				var _enemy:Enemy;
+				_enemyFactory = new EnemyFactory();
+				devilCount ++;
+				if (devilCount == 2) _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_ARGER);
+				if (devilCount == 3) _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_TANK);
+				else _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_SCOUT);
+				enemy.push(_enemy);
+				addChild(_enemy);
+				enemy[e].behaviour();
+				enemy[e].x = 2300 + e * 500;
+				enemy[e].y = 520;
+			}
+			
+		}
+		
+		private function waveFive():void 
+		{
+			for (var e:int = 0; e < 4; e++) {
+				var _enemy:Enemy;
+				_enemyFactory = new EnemyFactory();
+				devilCount ++;
+				if (devilCount == 2) _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_TANK);
+				if (devilCount == 3) _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_TANK);
+				if (devilCount == 4) _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_HEALER);
+				else _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_SCOUT);
+				enemy.push(_enemy);
+				addChild(_enemy);
+				enemy[e].behaviour();
+				enemy[e].x = 2300 + e * 400;
+				enemy[e].y = 520;
+			}
+			
+		}
+		
+		private function waveSix():void 
+		{
+			for (var e:int = 0; e < 7; e++) {
+				var _enemy:Enemy;
+				_enemyFactory = new EnemyFactory();
+				devilCount ++;
+				if (devilCount == 2) _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_TANK);
+				if (devilCount == 3) _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_TANK);
+				if (devilCount == 4) _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_HEALER);
+				if (devilCount == 6) _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_ARGER);
+				else _enemy = _enemyFactory.createEnemy(EnemyFactory.ENEMY_SCOUT);
+				enemy.push(_enemy);
+				addChild(_enemy);
+				enemy[e].behaviour();
+				enemy[e].x = 2200 + e * 900;
+				enemy[e].y = 520;
+			}
+			
+		}
 		private function heal():void 
 		{
 			var leng:int = soldier.length -1;
@@ -576,10 +733,32 @@ package game
 					channel = healSound.play(0, 1);
 				}
 			}
+		}
+		
+		private function healDevil():void 
+		{
+			var leng:int = enemy.length;
+			for (var i:int =  0; i < leng; i++) {
+				if (enemy[i].healing == true) {
+					enemy[0].health += 80;
+					_heal2 = new HealingDevil();
+					addChild(_heal2);
+					addEventListener(Event.ENTER_FRAME, heal2Pos);
+					
+					channel = healSound.play(0, 1);
+				}
+			}
+		}
+		
+		private function heal2Pos(e:Event):void 
+		{
+			_heal2.x = enemy[0].x - 20;
+			_heal2.y = soldier[0].y - 20;
 			
-			/*if (_heal.currentFrame == _heal.totalFrames) {
-				removeChild(_heal);
-			}*/
+			if (_heal2.currentFrame >= _heal2.totalFrames) {
+				removeChild(_heal2);
+				removeEventListener(Event.ENTER_FRAME, heal2Pos);
+			}
 		}
 		
 		private function healPos(e:Event):void 
@@ -692,14 +871,68 @@ package game
 		{
 			for (var i:int = enemy.length - 1; i >= 0; i--) {
 				if (enemy[i].died == true) {
+					pickupX = enemy[0].x;
+					waveCount ++;
 					ui.mana += enemy[i].mana;
 					
 					enemy[i].removeEventListener(Event.ENTER_FRAME, enemy[i].update);
 					removeChild(enemy[i]);
 					enemy.splice(i, 1);
+					
+					spawnPickup();
+					pickupNumber = Math.floor(Math.random() * 10);
+					trace(pickupNumber);
+					
 				}
 			}
 			
+		}
+		
+		private function spawnPickup():void 
+		{
+			if (pickupNumber <= 5) {
+				
+				for (var i:int = 0; i < 1; i++){
+				_pickupFactory = new PickupFactory();
+				_pickup = _pickupFactory.createPickup(PickupFactory.BRONZE_PICKUP);
+				pickup.push(_pickup);
+				addChild(_pickup);
+				_pickup.x = pickupX;
+				_pickup.y = 490;
+				_pickup.pickupBehaviour();
+				
+				trace("bronze");
+			}
+				
+			}else if(pickupNumber <= 7) {
+				
+				for (var j:int = 0; j < 1; j++){
+				_pickupFactory = new PickupFactory();
+				_pickup = _pickupFactory.createPickup(PickupFactory.SILVER_PICKUP);
+				pickup.push(_pickup);
+				addChild(_pickup);
+				_pickup.x = pickupX;
+				_pickup.y = 490;
+				_pickup.pickupBehaviour();
+			}
+				
+				
+			}else if (pickupNumber <= 9) {
+				
+				for (var p:int = 0; p < 1; p++){
+				_pickupFactory = new PickupFactory();
+				_pickup = _pickupFactory.createPickup(PickupFactory.GOLD_PICKUP);
+				pickup.push(_pickup);
+				addChild(_pickup);
+				_pickup.x = pickupX;
+				_pickup.y = 490;
+				_pickup.pickupBehaviour();
+			}
+				
+				
+			}else if (pickupNumber == 0) {
+				
+			}
 		}
 		
 		

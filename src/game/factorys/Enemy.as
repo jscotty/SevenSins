@@ -36,11 +36,13 @@ package game.factorys
 		
 		private var _shooting:String = "shoot.mp3";
 		private var _deathS:String = "death.mp3";
+		private var _hitS:String = "hit.mp3";
 		private var shootSound:Sound;
 		private var deathSound:Sound;
 		private var channel:SoundChannel;
 		private var healCount:int;
-		private var healing:Boolean = false;
+		private var hitSound:Sound;
+		public var healing:Boolean = false;
 		
 		public var anim:Number;
 		
@@ -48,10 +50,12 @@ package game.factorys
 		{
 			shootSound = new Sound();
 			deathSound = new Sound();
+			hitSound = new Sound();
 			channel = new SoundChannel();
 			
 			shootSound.load(new URLRequest(_shooting));
 			deathSound.load(new URLRequest(_deathS));
+			hitSound.load(new URLRequest(_hitS));
 			
 			addEventListener(Event.ENTER_FRAME, update, false, 0, true);
 		}
@@ -192,7 +196,7 @@ package game.factorys
 		
 		private function heal():void 
 		{
-			
+			healing = true;
 		}
 		
 		public function death():void 
@@ -227,6 +231,7 @@ package game.factorys
 			//trace("ATTACK!");
 				var leng:int = Game.soldier.length -1;
 				Game.soldier[leng].health -= damage;
+				channel = hitSound.play(0, 1);
 			
 		}
 		

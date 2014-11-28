@@ -43,10 +43,10 @@ package game.factorys.soldiers
 			this.scaleY = 1.4;
 			
 			health = 350;
-			damage = 90;
+			damage = 38;
 			speed = 2;
 			saveSpeed = 2;
-			hitCounter = 37;
+			hitCounter = 20;
 			shooter = false;
 			healer = false;
 			

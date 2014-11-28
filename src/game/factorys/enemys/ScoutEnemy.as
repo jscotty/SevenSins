@@ -45,12 +45,11 @@ package game.factorys.enemys
 			health = 100;
 			damage = 10;
 			speed = 4;
-			mana = 300;
+			mana = 250;
 			saveSpeed = 4;
 			hitCounter = 28;
 			shooter = false;
 			healer = false;
-			
 			
 			randomNumber = Math.floor(Math.random() * 2);
 			
